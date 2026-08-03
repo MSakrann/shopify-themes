@@ -1,0 +1,53 @@
+.glocket-section {
+  padding-top: var(--glocket-pad-top, 36px);
+  padding-bottom: var(--glocket-pad-bottom, 36px);
+}
+
+.glocket-section__inner {
+  max-width: var(--page-width, 1200px);
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.glocket-heading {
+  margin: 0 0 1rem;
+  letter-spacing: 0.02em;
+}
+
+.glocket-subheading {
+  margin: 0 0 1rem;
+  opacity: 0.9;
+}
+
+.glocket-body {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+}
+
+.glocket-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.9rem 1.75rem;
+  border: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.glocket-btn--primary {
+  width: 100%;
+}
+
+.glocket-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media screen and (max-width: 749px) {
+  .glocket-section {
+    padding-top: calc(var(--glocket-pad-top, 36px) * 0.75);
+    padding-bottom: calc(var(--glocket-pad-bottom, 36px) * 0.75);
+  }
+}

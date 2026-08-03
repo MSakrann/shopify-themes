@@ -1,0 +1,19 @@
+.glocket-product {
+  --glocket-tile-radius: 8px;
+  --glocket-border: rgba(var(--color-foreground), 0.15);
+  --glocket-border-selected: rgba(var(--color-foreground), 0.85);
+}
+
+.glocket-product__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media screen and (min-width: 990px) {
+  .glocket-product__layout {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
