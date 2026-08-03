@@ -489,11 +489,219 @@
   margin-left: auto;
 }
 
+.glocket-reviews__header {
+  max-width: 72rem;
+  margin: 0 auto clamp(3rem, 5vw, 5rem);
+  text-align: center;
+}
+
+.glocket-reviews__heading,
+.glocket-faq__heading {
+  font-size: clamp(3rem, 4vw, 4.8rem);
+  line-height: 1.1;
+}
+
+.glocket-reviews__rating {
+  margin: 0 0 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.glocket-reviews__supporting {
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.glocket-reviews__supporting > :first-child,
+.glocket-reviews__quote > :first-child,
+.glocket-faq__answer > :first-child,
+.glocket-cta-banner__text > :first-child {
+  margin-top: 0;
+}
+
+.glocket-reviews__supporting > :last-child,
+.glocket-reviews__quote > :last-child,
+.glocket-faq__answer > :last-child,
+.glocket-cta-banner__text > :last-child {
+  margin-bottom: 0;
+}
+
+.glocket-reviews__items {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.6rem, 2.5vw, 3rem);
+}
+
+.glocket-reviews__card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(2.4rem, 3vw, 3.6rem);
+  border: 0.1rem solid rgba(var(--color-foreground), 0.15);
+  border-radius: var(--text-boxes-radius, 0);
+  background: rgb(var(--color-background));
+}
+
+.glocket-reviews__card-rating {
+  margin: 0 0 1.6rem;
+  font-weight: 700;
+}
+
+.glocket-reviews__quote {
+  flex: 1 1 auto;
+  margin: 0 0 2.4rem;
+  padding: 0;
+  border: 0;
+  font-size: clamp(1.7rem, 1.8vw, 2rem);
+  line-height: 1.6;
+}
+
+.glocket-reviews__author {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.glocket-reviews__author cite {
+  font-style: normal;
+  font-weight: 600;
+}
+
+.glocket-reviews__avatar {
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.glocket-faq__inner {
+  max-width: 88rem;
+}
+
+.glocket-faq__heading {
+  margin-bottom: clamp(3rem, 5vw, 5rem);
+  text-align: center;
+}
+
+.glocket-faq__items {
+  border-top: 0.1rem solid rgba(var(--color-foreground), 0.2);
+}
+
+.glocket-faq__item {
+  border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.2);
+}
+
+.glocket-faq__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2.2rem 0;
+  font-size: clamp(1.8rem, 2vw, 2.2rem);
+  font-weight: 600;
+  line-height: 1.35;
+  cursor: pointer;
+  list-style: none;
+}
+
+.glocket-faq__summary::-webkit-details-marker {
+  display: none;
+}
+
+.glocket-faq__summary:focus-visible {
+  outline: 0.2rem solid currentColor;
+  outline-offset: 0.4rem;
+}
+
+.glocket-faq__icon {
+  position: relative;
+  flex: 0 0 2rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.glocket-faq__icon::before,
+.glocket-faq__icon::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.6rem;
+  height: 0.2rem;
+  background: currentColor;
+  content: '';
+  transform: translate(-50%, -50%);
+  transition: transform 160ms ease;
+}
+
+.glocket-faq__icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.glocket-faq__item[open] .glocket-faq__icon::after {
+  transform: translate(-50%, -50%) rotate(0);
+}
+
+.glocket-faq__answer {
+  max-width: 72rem;
+  padding: 0 4rem 2.4rem 0;
+  line-height: 1.65;
+  opacity: 0.85;
+}
+
+.glocket-cta-banner__panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  overflow: hidden;
+  border: 0.1rem solid rgba(var(--color-foreground), 0.18);
+  border-radius: var(--text-boxes-radius, 0);
+}
+
+.glocket-cta-banner__panel--without-media {
+  display: block;
+}
+
+.glocket-cta-banner__content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  padding: clamp(3rem, 6vw, 7rem);
+}
+
+.glocket-cta-banner__panel--without-media .glocket-cta-banner__content {
+  max-width: 84rem;
+  margin: 0 auto;
+  align-items: center;
+  text-align: center;
+}
+
+.glocket-cta-banner__heading {
+  font-size: clamp(3.2rem, 5vw, 5.8rem);
+  line-height: 1.05;
+}
+
+.glocket-cta-banner__text {
+  max-width: 60rem;
+}
+
+.glocket-cta-banner__media {
+  min-height: 32rem;
+}
+
+.glocket-cta-banner__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @media screen and (max-width: 989px) {
   .glocket-rich-media__grid,
   .glocket-stats-proof__lead,
   .glocket-feature-split__grid,
-  .glocket-comparison-proof__lead {
+  .glocket-comparison-proof__lead,
+  .glocket-cta-banner__panel {
     grid-template-columns: 1fr;
   }
 
@@ -503,7 +711,8 @@
   }
 
   .glocket-benefits-grid__items,
-  .glocket-process-steps__items {
+  .glocket-process-steps__items,
+  .glocket-reviews__items {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -517,7 +726,8 @@
   .glocket-benefits-grid__items,
   .glocket-stats-proof__stats,
   .glocket-process-steps__items,
-  .glocket-comparison-proof__claims {
+  .glocket-comparison-proof__claims,
+  .glocket-reviews__items {
     grid-template-columns: 1fr;
   }
 

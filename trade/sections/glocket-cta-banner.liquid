@@ -1,0 +1,130 @@
+{{ 'glocket-sections.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #GlocketCtaBanner-{{ section.id }} {
+    --glocket-pad-top: {{ section.settings.padding_top }}px;
+    --glocket-pad-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{% endstyle %}
+
+<div
+  id="GlocketCtaBanner-{{ section.id }}"
+  class="glocket-section glocket-cta-banner color-{{ section.settings.color_scheme }} gradient"
+>
+  <div class="glocket-section__inner">
+    <div class="glocket-cta-banner__panel{% if section.settings.image == blank %} glocket-cta-banner__panel--without-media{% endif %}">
+      <div class="glocket-cta-banner__content">
+        {% if section.settings.heading != blank %}
+          <h2 class="glocket-heading glocket-cta-banner__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.text != blank %}
+          <div class="glocket-body glocket-cta-banner__text rte">{{ section.settings.text }}</div>
+        {% endif %}
+        {% if section.settings.button_label != blank %}
+          <a
+            class="glocket-btn"
+            {% if section.settings.button_link == blank %}
+              role="link"
+              aria-disabled="true"
+            {% else %}
+              href="{{ section.settings.button_link }}"
+            {% endif %}
+          >
+            {{ section.settings.button_label | escape }}
+          </a>
+        {% endif %}
+      </div>
+
+      {% if section.settings.image != blank %}
+        <div class="glocket-cta-banner__media">
+          {{
+            section.settings.image
+            | image_url: width: 1600
+            | image_tag:
+              class: 'glocket-cta-banner__image',
+              loading: 'lazy',
+              sizes: '(min-width: 990px) 50vw, 100vw',
+              widths: '375, 550, 750, 1100, 1500, 1600'
+          }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Glocket CTA banner",
+  "tag": "section",
+  "class": "section-glocket-cta-banner",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ready to get started?"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Add a short message that supports the next step.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Select a destination or enter an anchor such as #MainProduct."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Glocket CTA banner"
+    }
+  ]
+}
+{% endschema %}

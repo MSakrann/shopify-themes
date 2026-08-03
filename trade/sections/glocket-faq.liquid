@@ -1,249 +1,121 @@
-{% comment %}
-  GLOCKET — FAQ Accordion Section
-  Mirrors Vinia's "You've Got Questions. We Love Questions." section.
-{% endcomment %}
+{{ 'glocket-sections.css' | asset_url | stylesheet_tag }}
 
-<style>
-  .glocket-faq {
-    background: #fff;
-    padding: 80px 20px;
+{% style %}
+  #GlocketFaq-{{ section.id }} {
+    --glocket-pad-top: {{ section.settings.padding_top }}px;
+    --glocket-pad-bottom: {{ section.settings.padding_bottom }}px;
   }
+{% endstyle %}
 
-  .glocket-faq__inner {
-    max-width: 800px;
-    margin: 0 auto;
-  }
+<div
+  id="GlocketFaq-{{ section.id }}"
+  class="glocket-section glocket-faq color-{{ section.settings.color_scheme }} gradient"
+>
+  <div class="glocket-section__inner glocket-faq__inner">
+    {% if section.settings.heading != blank %}
+      <h2 class="glocket-heading glocket-faq__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
 
-  .glocket-faq__header {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-
-  .glocket-faq__heading {
-    font-size: clamp(26px, 3.5vw, 40px);
-    font-weight: 800;
-    color: #111;
-    margin: 0;
-    line-height: 1.2;
-  }
-
-  .glocket-faq__list {
-    border-top: 1px solid #e5e5e5;
-  }
-
-  .glocket-faq__item {
-    border-bottom: 1px solid #e5e5e5;
-  }
-
-  .glocket-faq__trigger {
-    width: 100%;
-    background: none;
-    border: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 0;
-    text-align: left;
-    cursor: pointer;
-    gap: 16px;
-    color: #111;
-  }
-
-  .glocket-faq__trigger:hover {
-    color: #444;
-  }
-
-  .glocket-faq__question {
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.4;
-    flex: 1;
-  }
-
-  .glocket-faq__icon {
-    font-size: 22px;
-    font-weight: 300;
-    color: #888;
-    flex-shrink: 0;
-    transition: transform 0.25s;
-    line-height: 1;
-  }
-
-  .glocket-faq__item.open .glocket-faq__icon {
-    transform: rotate(45deg);
-  }
-
-  .glocket-faq__answer {
-    display: none;
-    padding: 0 0 20px;
-    font-size: 15px;
-    color: #555;
-    line-height: 1.8;
-  }
-
-  .glocket-faq__item.open .glocket-faq__answer {
-    display: block;
-  }
-
-  .glocket-faq__answer p + p {
-    margin-top: 10px;
-  }
-
-  /* ── "See More" / Contact CTA ── */
-  .glocket-faq__cta {
-    text-align: center;
-    margin-top: 48px;
-    padding-top: 32px;
-    border-top: 1px solid #eee;
-  }
-
-  .glocket-faq__cta-label {
-    font-size: 15px;
-    color: #666;
-    margin-bottom: 14px;
-  }
-
-  .glocket-faq__cta-link {
-    display: inline-block;
-    padding: 12px 32px;
-    border: 2px solid #111;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 700;
-    color: #111;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .glocket-faq__cta-link:hover {
-    background: #111;
-    color: #fff;
-  }
-</style>
-
-<section class="glocket-faq" id="glocket-faq">
-  <div class="glocket-faq__inner">
-
-    <div class="glocket-faq__header">
-      <h2 class="glocket-faq__heading">{{ section.settings.heading }}</h2>
-    </div>
-
-    <div class="glocket-faq__list">
-
-      <div class="glocket-faq__item">
-        <button class="glocket-faq__trigger" aria-expanded="false">
-          <span class="glocket-faq__question">What surfaces does Glocket work on?</span>
-          <span class="glocket-faq__icon">+</span>
-        </button>
-        <div class="glocket-faq__answer">
-          <p>Glocket works best on smooth, non-porous surfaces: glass, smooth polycarbonate phone cases, silicone phone cases, ceramic tiles, mirrors, marble countertops, car dashboards, and metal surfaces.</p>
-          <p>It does not work well on textured, leather, fabric, or heavily matte surfaces, as these prevent the suction cups from forming a complete seal.</p>
-        </div>
+    {% if section.blocks.size > 0 %}
+      <div class="glocket-faq__items">
+        {% for block in section.blocks %}
+          <details class="glocket-faq__item" {{ block.shopify_attributes }}>
+            <summary class="glocket-faq__summary">
+              <span>{{ block.settings.question | escape }}</span>
+              <span class="glocket-faq__icon" aria-hidden="true"></span>
+            </summary>
+            {% if block.settings.answer != blank %}
+              <div class="glocket-faq__answer rte">{{ block.settings.answer }}</div>
+            {% endif %}
+          </details>
+        {% endfor %}
       </div>
-
-      <div class="glocket-faq__item">
-        <button class="glocket-faq__trigger" aria-expanded="false">
-          <span class="glocket-faq__question">How do I restore suction if Glocket starts to lose grip?</span>
-          <span class="glocket-faq__icon">+</span>
-        </button>
-        <div class="glocket-faq__answer">
-          <p>Simply rinse Glocket under warm water, gently rub the suction cup surface with your fingers to remove dust and oils, then let it air dry for a few minutes. Suction fully restores — usually in under 10 minutes.</p>
-          <p>This process can be repeated hundreds of times. Silicon suction does not degrade from washing.</p>
-        </div>
-      </div>
-
-      <div class="glocket-faq__item">
-        <button class="glocket-faq__trigger" aria-expanded="false">
-          <span class="glocket-faq__question">How many cards can Glocket hold?</span>
-          <span class="glocket-faq__icon">+</span>
-        </button>
-        <div class="glocket-faq__answer">
-          <p>Glocket's card compartment securely holds up to 3 standard-size cards (credit cards, ID cards, transit passes). It can technically fit a 4th card but we recommend 3 for the easiest access and best grip.</p>
-        </div>
-      </div>
-
-      <div class="glocket-faq__item">
-        <button class="glocket-faq__trigger" aria-expanded="false">
-          <span class="glocket-faq__question">Will Glocket damage my phone case or device?</span>
-          <span class="glocket-faq__icon">+</span>
-        </button>
-        <div class="glocket-faq__answer">
-          <p>No. Glocket uses pure silicon suction — no adhesive, no glue, no double-sided tape. It attaches and detaches cleanly with zero residue and zero damage to your phone or case.</p>
-          <p>It's safe for glass-back phones, polycarbonate and silicone cases, and works with most wireless (MagSafe) charging through slim cases.</p>
-        </div>
-      </div>
-
-      <div class="glocket-faq__item">
-        <button class="glocket-faq__trigger" aria-expanded="false">
-          <span class="glocket-faq__question">Is Glocket compatible with MagSafe or wireless charging?</span>
-          <span class="glocket-faq__icon">+</span>
-        </button>
-        <div class="glocket-faq__answer">
-          <p>Yes, in most cases. Because Glocket is silicon (not metal), it does not interfere with wireless charging signals. Cards in the pocket, however, should be removed before wireless charging to protect them from heat.</p>
-          <p>MagSafe magnets may slightly reduce suction strength on iPhone 12 and later models. We recommend positioning Glocket slightly away from the MagSafe ring for best results.</p>
-        </div>
-      </div>
-
-      <div class="glocket-faq__item">
-        <button class="glocket-faq__trigger" aria-expanded="false">
-          <span class="glocket-faq__question">What is your return policy?</span>
-          <span class="glocket-faq__icon">+</span>
-        </button>
-        <div class="glocket-faq__answer">
-          <p>We offer a 30-day hassle-free return policy. If you're not satisfied for any reason, contact us within 30 days of delivery and we'll process a full refund — no questions asked.</p>
-          <p>Return shipping is covered by the customer. Refunds are issued within 3–5 business days of receiving the return.</p>
-        </div>
-      </div>
-
-      <div class="glocket-faq__item">
-        <button class="glocket-faq__trigger" aria-expanded="false">
-          <span class="glocket-faq__question">What phone models is Glocket compatible with?</span>
-          <span class="glocket-faq__icon">+</span>
-        </button>
-        <div class="glocket-faq__answer">
-          <p>Glocket is universal — it works with virtually all smartphones including iPhone (all models), Samsung Galaxy, Google Pixel, OnePlus, and more. Because it attaches via suction to the back of your phone or case, it's not model-specific.</p>
-          <p>The only requirement is that your phone's back surface (or case) is smooth enough to form a seal.</p>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="glocket-faq__cta">
-      <p class="glocket-faq__cta-label">Still have a question?</p>
-      <a href="/pages/contact" class="glocket-faq__cta-link">Contact Us</a>
-    </div>
-
+    {% endif %}
   </div>
-</section>
-
-<script>
-(function() {
-  var triggers = document.querySelectorAll('.glocket-faq__trigger');
-  triggers.forEach(function(trigger) {
-    trigger.addEventListener('click', function() {
-      var item = this.closest('.glocket-faq__item');
-      var isOpen = item.classList.contains('open');
-      // Close all
-      document.querySelectorAll('.glocket-faq__item').forEach(function(i) {
-        i.classList.remove('open');
-        i.querySelector('.glocket-faq__trigger').setAttribute('aria-expanded', 'false');
-      });
-      // Open clicked if it was closed
-      if (!isOpen) {
-        item.classList.add('open');
-        this.setAttribute('aria-expanded', 'true');
-      }
-    });
-  });
-})();
-</script>
+</div>
 
 {% schema %}
 {
   "name": "Glocket FAQ",
   "tag": "section",
+  "class": "section-glocket-faq",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 12,
   "settings": [
-    { "type": "text", "id": "heading", "label": "Section Heading", "default": "You've Got Questions. We Love Questions." }
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently asked questions"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Add a frequently asked question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Add a clear and helpful answer.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Glocket FAQ",
+      "blocks": [
+        {
+          "type": "faq_item"
+        },
+        {
+          "type": "faq_item"
+        },
+        {
+          "type": "faq_item"
+        }
+      ]
+    }
   ]
 }
 {% endschema %}

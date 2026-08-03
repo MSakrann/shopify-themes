@@ -1,283 +1,169 @@
-{% comment %}
-  GLOCKET — Reviews & Testimonials Section
-  Mirrors Vinia's "4.8 Stars out of 5" section:
-    - Bold star rating + subscriber count header
-    - 3-quote testimonial carousel
-    - Review app embed block (for Judge.me / Yotpo / Stamped / Okendo)
-{% endcomment %}
+{{ 'glocket-sections.css' | asset_url | stylesheet_tag }}
 
-<style>
-  .glocket-reviews {
-    background: #f9f8f6;
-    padding: 80px 20px;
+{% style %}
+  #GlocketReviews-{{ section.id }} {
+    --glocket-pad-top: {{ section.settings.padding_top }}px;
+    --glocket-pad-bottom: {{ section.settings.padding_bottom }}px;
   }
+{% endstyle %}
 
-  .glocket-reviews__inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  /* ── Header ── */
-  .glocket-reviews__header {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-
-  .glocket-reviews__stars {
-    color: #f4b400;
-    font-size: 36px;
-    letter-spacing: 4px;
-    display: block;
-    margin-bottom: 10px;
-  }
-
-  .glocket-reviews__heading {
-    font-size: clamp(26px, 3.5vw, 40px);
-    font-weight: 800;
-    color: #111;
-    margin: 0 0 8px;
-  }
-
-  .glocket-reviews__subheading {
-    font-size: 15px;
-    color: #888;
-  }
-
-  /* ── Quote carousel ── */
-  .glocket-reviews__carousel {
-    display: flex;
-    gap: 24px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 8px;
-    margin-bottom: 16px;
-  }
-
-  .glocket-reviews__carousel::-webkit-scrollbar { display: none; }
-
-  .glocket-reviews__quote-card {
-    flex: 0 0 calc(33.333% - 16px);
-    min-width: 260px;
-    background: #fff;
-    border-radius: 16px;
-    padding: 28px 24px;
-    scroll-snap-align: start;
-    border: 1px solid #efefef;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  @media (max-width: 900px) {
-    .glocket-reviews__quote-card { flex: 0 0 calc(50% - 12px); }
-  }
-
-  @media (max-width: 560px) {
-    .glocket-reviews__quote-card { flex: 0 0 90%; }
-  }
-
-  .glocket-reviews__quote-stars {
-    color: #f4b400;
-    font-size: 16px;
-    letter-spacing: 2px;
-  }
-
-  .glocket-reviews__quote-text {
-    font-size: 14px;
-    color: #333;
-    line-height: 1.7;
-    margin: 0;
-    flex: 1;
-    font-style: italic;
-  }
-
-  .glocket-reviews__quote-text::before { content: '"'; }
-  .glocket-reviews__quote-text::after  { content: '"'; }
-
-  .glocket-reviews__quote-author {
-    font-size: 13px;
-    font-weight: 700;
-    color: #111;
-  }
-
-  /* ── Carousel dots ── */
-  .glocket-reviews__dots {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin-bottom: 52px;
-  }
-
-  .glocket-reviews__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #ddd;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: background 0.2s;
-  }
-
-  .glocket-reviews__dot.active { background: #111; }
-
-  /* ── Review app embed container ── */
-  .glocket-reviews__app-embed {
-    background: #fff;
-    border-radius: 16px;
-    padding: 40px 32px;
-    border: 1px solid #eee;
-  }
-
-  .glocket-reviews__app-embed-placeholder {
-    text-align: center;
-    padding: 48px 20px;
-    color: #aaa;
-    font-size: 14px;
-    border: 2px dashed #ddd;
-    border-radius: 12px;
-  }
-</style>
-
-<section class="glocket-reviews" id="glocket-reviews">
-  <div class="glocket-reviews__inner">
-
-    {%- comment -%} Header {%- endcomment -%}
+<div
+  id="GlocketReviews-{{ section.id }}"
+  class="glocket-section glocket-reviews color-{{ section.settings.color_scheme }} gradient"
+>
+  <div class="glocket-section__inner">
     <div class="glocket-reviews__header">
-      <span class="glocket-reviews__stars">★★★★★</span>
-      <h2 class="glocket-reviews__heading">{{ section.settings.heading }}</h2>
-      <p class="glocket-reviews__subheading">
-        {{ section.settings.rating }} out of 5 from {{ section.settings.review_count }} verified buyers
-      </p>
-    </div>
-
-    {%- comment -%} Featured quote carousel {%- endcomment -%}
-    <div class="glocket-reviews__carousel" id="glocket-reviews-carousel">
-
-      <div class="glocket-reviews__quote-card">
-        <div class="glocket-reviews__quote-stars">★★★★★</div>
-        <p class="glocket-reviews__quote-text">{{ section.settings.quote_1 }}</p>
-        <span class="glocket-reviews__quote-author">— {{ section.settings.quote_1_author }}</span>
-      </div>
-
-      <div class="glocket-reviews__quote-card">
-        <div class="glocket-reviews__quote-stars">★★★★★</div>
-        <p class="glocket-reviews__quote-text">{{ section.settings.quote_2 }}</p>
-        <span class="glocket-reviews__quote-author">— {{ section.settings.quote_2_author }}</span>
-      </div>
-
-      <div class="glocket-reviews__quote-card">
-        <div class="glocket-reviews__quote-stars">★★★★★</div>
-        <p class="glocket-reviews__quote-text">{{ section.settings.quote_3 }}</p>
-        <span class="glocket-reviews__quote-author">— {{ section.settings.quote_3_author }}</span>
-      </div>
-
-    </div>
-
-    <div class="glocket-reviews__dots">
-      <button class="glocket-reviews__dot active" data-index="0"></button>
-      <button class="glocket-reviews__dot" data-index="1"></button>
-      <button class="glocket-reviews__dot" data-index="2"></button>
-    </div>
-
-    {%- comment -%}
-      ─────────────────────────────────────────────────
-      REVIEW APP EMBED
-      Replace the comment below with your review app's
-      widget embed code. Common options:
-
-      Judge.me:
-        {% render 'judgeme_widgets', widget_type: 'judgeme_reviews_widget', jm_style: '', concierge_install: true, product: product, hide_if_no_reviews: false, id: product.id %}
-
-      Yotpo:
-        <div class="yotpo yotpo-reviews-carousel" data-product-id="{{ product.id }}"></div>
-
-      Stamped.io:
-        {% render 'stamped-reviews-widget', product: product %}
-
-      Okendo:
-        {% render 'okendo-reviews-widget', product: product %}
-      ─────────────────────────────────────────────────
-    {%- endcomment -%}
-
-    <div class="glocket-reviews__app-embed">
-      {% if section.settings.reviews_app == 'judgeme' %}
-        {% render 'judgeme_widgets', widget_type: 'judgeme_reviews_widget', jm_style: '', concierge_install: true, product: product, hide_if_no_reviews: false, id: product.id %}
-
-      {% elsif section.settings.reviews_app == 'yotpo' %}
-        <div class="yotpo yotpo-reviews-carousel" data-product-id="{{ product.id }}"></div>
-
-      {% elsif section.settings.reviews_app == 'stamped' %}
-        {% render 'stamped-reviews-widget', product: product %}
-
-      {% elsif section.settings.reviews_app == 'okendo' %}
-        {% render 'okendo-reviews-widget', product: product %}
-
-      {% else %}
-        <div class="glocket-reviews__app-embed-placeholder">
-          <p>📋 Review widget goes here.</p>
-          <p>In Shopify Theme Editor → this section → set your <strong>Reviews App</strong> to Judge.me, Yotpo, Stamped, or Okendo.</p>
-        </div>
+      {% if section.settings.heading != blank %}
+        <h2 class="glocket-heading glocket-reviews__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.rating_summary != blank %}
+        <p class="glocket-reviews__rating">{{ section.settings.rating_summary | escape }}</p>
+      {% endif %}
+      {% if section.settings.supporting_text != blank %}
+        <div class="glocket-reviews__supporting rte">{{ section.settings.supporting_text }}</div>
       {% endif %}
     </div>
 
+    {% if section.blocks.size > 0 %}
+      <div class="glocket-reviews__items">
+        {% for block in section.blocks %}
+          <article class="glocket-reviews__card" {{ block.shopify_attributes }}>
+            {% if block.settings.rating_text != blank %}
+              <p class="glocket-reviews__card-rating">{{ block.settings.rating_text | escape }}</p>
+            {% endif %}
+            {% if block.settings.quote != blank %}
+              <blockquote class="glocket-reviews__quote">
+                <p>{{ block.settings.quote | escape }}</p>
+              </blockquote>
+            {% endif %}
+            <footer class="glocket-reviews__author">
+              {% if block.settings.avatar != blank %}
+                {{
+                  block.settings.avatar
+                  | image_url: width: 160
+                  | image_tag:
+                    class: 'glocket-reviews__avatar',
+                    loading: 'lazy',
+                    sizes: '56px',
+                    widths: '56, 80, 112, 160'
+                }}
+              {% endif %}
+              {% if block.settings.author != blank %}
+                <cite>{{ block.settings.author | escape }}</cite>
+              {% endif %}
+            </footer>
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
-</section>
-
-<script>
-(function() {
-  var carousel = document.getElementById('glocket-reviews-carousel');
-  var dots = document.querySelectorAll('.glocket-reviews__dot');
-  if (!carousel) return;
-
-  carousel.addEventListener('scroll', function() {
-    var cards = carousel.querySelectorAll('.glocket-reviews__quote-card');
-    if (!cards.length) return;
-    var idx = Math.round(carousel.scrollLeft / (cards[0].offsetWidth + 24));
-    dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
-  }, { passive: true });
-
-  dots.forEach(function(dot) {
-    dot.addEventListener('click', function() {
-      var cards = carousel.querySelectorAll('.glocket-reviews__quote-card');
-      if (!cards.length) return;
-      carousel.scrollTo({ left: parseInt(this.dataset.index) * (cards[0].offsetWidth + 24), behavior: 'smooth' });
-    });
-  });
-})();
-</script>
+</div>
 
 {% schema %}
 {
-  "name": "Glocket Reviews",
+  "name": "Glocket reviews",
   "tag": "section",
+  "class": "section-glocket-reviews",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 6,
   "settings": [
-    { "type": "text", "id": "heading", "label": "Section Heading", "default": "Loved by Thousands" },
-    { "type": "text", "id": "rating", "label": "Average Rating", "default": "4.8" },
-    { "type": "text", "id": "review_count", "label": "Review Count", "default": "10,000+" },
     {
-      "type": "select",
-      "id": "reviews_app",
-      "label": "Reviews App",
-      "info": "Choose your installed review app. The widget will render automatically.",
-      "options": [
-        { "value": "none", "label": "None / Set up manually" },
-        { "value": "judgeme", "label": "Judge.me" },
-        { "value": "yotpo", "label": "Yotpo" },
-        { "value": "stamped", "label": "Stamped.io" },
-        { "value": "okendo", "label": "Okendo" }
-      ],
-      "default": "none"
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What customers are saying"
     },
-    { "type": "header", "content": "Featured Quotes" },
-    { "type": "textarea", "id": "quote_1", "label": "Quote 1", "default": "I never carry my wallet anymore. Glocket holds my 3 most-used cards and sticks perfectly to my car dash. Game changer." },
-    { "type": "text", "id": "quote_1_author", "label": "Quote 1 Author", "default": "Sarah M." },
-    { "type": "textarea", "id": "quote_2", "label": "Quote 2", "default": "Super slim, super strong. I was skeptical but the suction is incredible. It doesn't budge even when I'm at the gym." },
-    { "type": "text", "id": "quote_2_author", "label": "Quote 2 Author", "default": "James T." },
-    { "type": "textarea", "id": "quote_3", "label": "Quote 3", "default": "Bought one for myself and three more as gifts. Everyone loves it. Best $20 I've spent in a long time." },
-    { "type": "text", "id": "quote_3_author", "label": "Quote 3 Author", "default": "Linda R." }
+    {
+      "type": "text",
+      "id": "rating_summary",
+      "label": "Rating summary",
+      "default": "Customer rating summary"
+    },
+    {
+      "type": "richtext",
+      "id": "supporting_text",
+      "label": "Supporting text",
+      "default": "<p>Add a short introduction to your customer reviews.</p>"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Add a customer review."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Customer name"
+        },
+        {
+          "type": "text",
+          "id": "rating_text",
+          "label": "Rating text",
+          "default": "Customer rating"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Glocket reviews",
+      "blocks": [
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        }
+      ]
+    }
   ]
 }
 {% endschema %}
