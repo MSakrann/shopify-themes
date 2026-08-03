@@ -2,6 +2,7 @@
   --glocket-tile-radius: 8px;
   --glocket-border: rgba(var(--color-foreground), 0.15);
   --glocket-border-selected: rgba(var(--color-foreground), 0.85);
+  padding-block: var(--glocket-pad-top) var(--glocket-pad-bottom);
 }
 
 .glocket-product__layout {
@@ -16,6 +17,178 @@
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
   }
+
+  .glocket-product__info--sticky {
+    position: sticky;
+    top: 2rem;
+  }
+}
+
+.glocket-product__info {
+  min-width: 0;
+}
+
+.glocket-product__social-proof {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+  margin-bottom: 1rem;
+  color: inherit;
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+
+.glocket-product__social-proof--link:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.glocket-product__stars {
+  color: rgb(var(--color-button));
+  letter-spacing: 0.08em;
+}
+
+.glocket-product__title {
+  margin: 0 0 1rem;
+  font-size: clamp(2.8rem, 4vw, 4.4rem);
+  line-height: 1.08;
+}
+
+.glocket-product__trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--glocket-border);
+  border-radius: var(--glocket-tile-radius);
+  background: rgba(var(--color-foreground), 0.035);
+}
+
+.glocket-product__trust-badge-icon {
+  flex: 0 0 auto;
+  width: 4.8rem;
+  height: 4.8rem;
+  object-fit: contain;
+}
+
+.glocket-product__trust-badge-heading,
+.glocket-product__trust-badge-text {
+  margin: 0;
+}
+
+.glocket-product__trust-badge-heading {
+  font-weight: 700;
+}
+
+.glocket-product__trust-badge-link {
+  display: inline-block;
+  margin-top: 0.3rem;
+  color: inherit;
+  text-underline-offset: 0.2rem;
+}
+
+.glocket-product__description {
+  margin-bottom: 1.5rem;
+}
+
+.glocket-product__bullets {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.glocket-product__bullet {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.glocket-product__bullet-icon,
+.glocket-product__trust-item-icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  object-fit: contain;
+}
+
+.glocket-product__bullet-check {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+  font-size: 1.3rem;
+}
+
+.glocket-product__quantity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+}
+
+.glocket-product__quantity-input {
+  width: 8rem;
+  min-height: 4.4rem;
+  padding: 0.8rem;
+  border: 1px solid var(--glocket-border-selected);
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+}
+
+.glocket-product__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.glocket-product__price-current {
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.glocket-product__price-compare {
+  color: rgba(var(--color-foreground), 0.6);
+  font-size: 1.7rem;
+}
+
+.glocket-product__buttons {
+  display: grid;
+  gap: 1rem;
+  max-width: none;
+}
+
+.glocket-product__atc {
+  min-height: 5.4rem;
+  font-weight: 700;
+}
+
+.glocket-product__trust-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--glocket-border);
+}
+
+.glocket-product__trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  font-size: 1.2rem;
 }
 
 .glocket-accordion {
