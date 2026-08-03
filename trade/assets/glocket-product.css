@@ -17,3 +17,45 @@
     gap: 3rem;
   }
 }
+
+.glocket-accordion {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--glocket-border);
+}
+
+.glocket-accordion__item {
+  border-bottom: 1px solid var(--glocket-border);
+}
+
+.glocket-accordion__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 0;
+  list-style: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.glocket-accordion__trigger::-webkit-details-marker {
+  display: none;
+}
+
+.glocket-accordion__chevron {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.glocket-accordion__item[open] .glocket-accordion__chevron {
+  transform: rotate(-135deg);
+}
+
+.glocket-accordion__panel {
+  padding: 0 0 1rem;
+}

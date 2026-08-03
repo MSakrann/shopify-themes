@@ -1,0 +1,22 @@
+{% doc %}
+  Renders Glocket buy-box accordions under the gallery.
+  @param {object} blocks - Section blocks to filter for accordion_item
+  @example
+  {% render 'glocket-accordion', blocks: section.blocks %}
+{% enddoc %}
+
+<div class="glocket-accordion">
+  {% for block in blocks %}
+    {% if block.type == 'accordion_item' %}
+      <details class="glocket-accordion__item" {{ block.shopify_attributes }}>
+        <summary class="glocket-accordion__trigger">
+          <span class="glocket-accordion__heading">{{ block.settings.heading }}</span>
+          <span class="glocket-accordion__chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="glocket-accordion__panel rte">
+          {{ block.settings.content }}
+        </div>
+      </details>
+    {% endif %}
+  {% endfor %}
+</div>
