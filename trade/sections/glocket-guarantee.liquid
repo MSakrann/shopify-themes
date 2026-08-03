@@ -1,0 +1,125 @@
+{{ 'glocket-sections.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #GlocketGuarantee-{{ section.id }} {
+    --glocket-pad-top: {{ section.settings.padding_top }}px;
+    --glocket-pad-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{% endstyle %}
+
+<div
+  id="GlocketGuarantee-{{ section.id }}"
+  class="glocket-section glocket-guarantee color-{{ section.settings.color_scheme }} gradient"
+>
+  <div class="glocket-section__inner">
+    <div class="glocket-guarantee__card">
+      {% if section.settings.badge_image != blank %}
+        {{
+          section.settings.badge_image
+          | image_url: width: 480
+          | image_tag:
+            class: 'glocket-guarantee__badge',
+            loading: 'lazy',
+            sizes: '160px',
+            widths: '120, 180, 240, 360, 480'
+        }}
+      {% endif %}
+      <div class="glocket-guarantee__content">
+        {% if section.settings.heading != blank %}
+          <h2 class="glocket-heading glocket-guarantee__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.body != blank %}
+          <div class="glocket-body glocket-guarantee__body rte">{{ section.settings.body }}</div>
+        {% endif %}
+        {% if section.settings.cta_label != blank %}
+          <a
+            class="glocket-btn"
+            {% if section.settings.cta_link == blank %}
+              role="link"
+              aria-disabled="true"
+            {% else %}
+              href="{{ section.settings.cta_link }}"
+            {% endif %}
+          >
+            {{ section.settings.cta_label | escape }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Glocket guarantee",
+  "tag": "section",
+  "class": "section-glocket-guarantee",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Badge image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Try it with confidence"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Explain your guarantee, return window, or satisfaction promise in clear and reassuring language.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Glocket guarantee"
+    }
+  ]
+}
+{% endschema %}

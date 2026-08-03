@@ -1,0 +1,152 @@
+{{ 'glocket-sections.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #GlocketComparisonProof-{{ section.id }} {
+    --glocket-pad-top: {{ section.settings.padding_top }}px;
+    --glocket-pad-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{% endstyle %}
+
+<div
+  id="GlocketComparisonProof-{{ section.id }}"
+  class="glocket-section glocket-comparison-proof color-{{ section.settings.color_scheme }} gradient"
+>
+  <div class="glocket-section__inner">
+    <div class="glocket-comparison-proof__lead{% if section.settings.image == blank %} glocket-comparison-proof__lead--without-media{% endif %}">
+      <div class="glocket-comparison-proof__content">
+        {% if section.settings.heading != blank %}
+          <h2 class="glocket-heading glocket-comparison-proof__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.body != blank %}
+          <div class="glocket-body glocket-comparison-proof__body rte">{{ section.settings.body }}</div>
+        {% endif %}
+      </div>
+
+      {% if section.settings.image != blank %}
+        <div class="glocket-comparison-proof__media">
+          {{
+            section.settings.image
+            | image_url: width: 1600
+            | image_tag:
+              class: 'glocket-comparison-proof__image',
+              loading: 'lazy',
+              sizes: '(min-width: 990px) 44vw, 100vw',
+              widths: '375, 550, 750, 1100, 1500, 1600'
+          }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% if section.blocks.size > 0 %}
+      <div class="glocket-comparison-proof__claims">
+        {% for block in section.blocks %}
+          <div class="glocket-comparison-proof__claim" {{ block.shopify_attributes }}>
+            {% if block.settings.value != blank %}
+              <p class="glocket-comparison-proof__value">{{ block.settings.value | escape }}</p>
+            {% endif %}
+            {% if block.settings.text != blank %}
+              <p class="glocket-comparison-proof__text">{{ block.settings.text | escape }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Glocket comparison proof",
+  "tag": "section",
+  "class": "section-glocket-comparison-or-proof",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The difference is clear"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Use independent findings, preference results, or direct comparisons to support your product story.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "claim",
+      "name": "Claim",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "00%"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Add a concise preference or proof statement."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Glocket comparison proof",
+      "blocks": [
+        {
+          "type": "claim"
+        },
+        {
+          "type": "claim"
+        },
+        {
+          "type": "claim"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

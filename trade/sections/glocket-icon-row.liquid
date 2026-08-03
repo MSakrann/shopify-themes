@@ -1,0 +1,120 @@
+{{ 'glocket-sections.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #GlocketIconRow-{{ section.id }} {
+    --glocket-pad-top: {{ section.settings.padding_top }}px;
+    --glocket-pad-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{% endstyle %}
+
+<div
+  id="GlocketIconRow-{{ section.id }}"
+  class="glocket-section glocket-icon-row color-{{ section.settings.color_scheme }} gradient"
+>
+  <div class="glocket-section__inner glocket-icon-row__inner">
+    {% if section.blocks.size > 0 %}
+      <ul class="glocket-icon-row__items" role="list">
+        {% for block in section.blocks %}
+          <li class="glocket-icon-row__item" {{ block.shopify_attributes }}>
+            {% if block.settings.image != blank %}
+              {{
+                block.settings.image
+                | image_url: width: 240
+                | image_tag:
+                  class: 'glocket-icon-row__image',
+                  loading: 'lazy',
+                  sizes: '72px',
+                  widths: '72, 120, 180, 240'
+              }}
+            {% endif %}
+            {% if block.settings.label != blank %}
+              <p class="glocket-icon-row__label">{{ block.settings.label | escape }}</p>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Glocket icon row",
+  "tag": "section",
+  "class": "section-glocket-icon-row",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "icon_item",
+      "name": "Icon item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Feature label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Glocket icon row",
+      "blocks": [
+        {
+          "type": "icon_item"
+        },
+        {
+          "type": "icon_item"
+        },
+        {
+          "type": "icon_item"
+        },
+        {
+          "type": "icon_item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
