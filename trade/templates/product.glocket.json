@@ -86,17 +86,195 @@
       }
     },
     "rich_1": { "type": "glocket-rich-text-media", "settings": {} },
-    "benefits": { "type": "glocket-benefits-grid", "settings": {} },
-    "stats": { "type": "glocket-stats-proof", "settings": {} },
+    "benefits": {
+      "type": "glocket-benefits-grid",
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "title": "Benefit title",
+            "text": "<p>Explain this product benefit in a short, useful sentence.</p>"
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Benefit title",
+            "text": "<p>Explain this product benefit in a short, useful sentence.</p>"
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Benefit title",
+            "text": "<p>Explain this product benefit in a short, useful sentence.</p>"
+          }
+        }
+      },
+      "block_order": ["benefit_1", "benefit_2", "benefit_3"],
+      "settings": {}
+    },
+    "stats": {
+      "type": "glocket-stats-proof",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "value": "00%",
+            "label": "Stat label",
+            "text": "Add a short explanation of this result."
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "value": "00%",
+            "label": "Stat label",
+            "text": "Add a short explanation of this result."
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "value": "00%",
+            "label": "Stat label",
+            "text": "Add a short explanation of this result."
+          }
+        }
+      },
+      "block_order": ["stat_1", "stat_2", "stat_3"],
+      "settings": {}
+    },
     "feature_1": { "type": "glocket-feature-split", "settings": {} },
-    "process": { "type": "glocket-process-steps", "settings": {} },
+    "process": {
+      "type": "glocket-process-steps",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Step title",
+            "text": "<p>Describe what happens at this stage in one clear sentence.</p>"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Step title",
+            "text": "<p>Describe what happens at this stage in one clear sentence.</p>"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Step title",
+            "text": "<p>Describe what happens at this stage in one clear sentence.</p>"
+          }
+        }
+      },
+      "block_order": ["step_1", "step_2", "step_3"],
+      "settings": {}
+    },
     "feature_2": { "type": "glocket-feature-split", "settings": {} },
-    "icons": { "type": "glocket-icon-row", "settings": {} },
-    "proof": { "type": "glocket-comparison-or-proof", "settings": {} },
+    "icons": {
+      "type": "glocket-icon-row",
+      "blocks": {
+        "icon_1": { "type": "icon_item", "settings": { "label": "Feature label" } },
+        "icon_2": { "type": "icon_item", "settings": { "label": "Feature label" } },
+        "icon_3": { "type": "icon_item", "settings": { "label": "Feature label" } },
+        "icon_4": { "type": "icon_item", "settings": { "label": "Feature label" } }
+      },
+      "block_order": ["icon_1", "icon_2", "icon_3", "icon_4"],
+      "settings": {}
+    },
+    "proof": {
+      "type": "glocket-comparison-or-proof",
+      "blocks": {
+        "claim_1": {
+          "type": "claim",
+          "settings": {
+            "value": "00%",
+            "text": "Add a concise preference or proof statement."
+          }
+        },
+        "claim_2": {
+          "type": "claim",
+          "settings": {
+            "value": "00%",
+            "text": "Add a concise preference or proof statement."
+          }
+        },
+        "claim_3": {
+          "type": "claim",
+          "settings": {
+            "value": "00%",
+            "text": "Add a concise preference or proof statement."
+          }
+        }
+      },
+      "block_order": ["claim_1", "claim_2", "claim_3"],
+      "settings": {}
+    },
     "guarantee": { "type": "glocket-guarantee", "settings": {} },
     "cta_1": { "type": "glocket-cta-banner", "settings": {} },
-    "reviews": { "type": "glocket-reviews", "settings": {} },
-    "faq": { "type": "glocket-faq", "settings": {} },
+    "reviews": {
+      "type": "glocket-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "quote": "Add a customer review.",
+            "author": "Customer name",
+            "rating_text": "Customer rating"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "quote": "Add a customer review.",
+            "author": "Customer name",
+            "rating_text": "Customer rating"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "quote": "Add a customer review.",
+            "author": "Customer name",
+            "rating_text": "Customer rating"
+          }
+        }
+      },
+      "block_order": ["review_1", "review_2", "review_3"],
+      "settings": {}
+    },
+    "faq": {
+      "type": "glocket-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Add a frequently asked question",
+            "answer": "<p>Add a clear and helpful answer.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Add a frequently asked question",
+            "answer": "<p>Add a clear and helpful answer.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Add a frequently asked question",
+            "answer": "<p>Add a clear and helpful answer.</p>"
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3"],
+      "settings": {}
+    },
     "cta_2": { "type": "glocket-cta-banner", "settings": {} }
   },
   "order": [

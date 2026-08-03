@@ -34,7 +34,7 @@ Use this checklist after uploading the `trade` theme to Shopify and assigning th
 
 ## Mobile
 
-- [ ] Single-column stack (gallery above buy box)
+- [ ] Single-column stack order: gallery, buy box / info stack, then accordions
 - [ ] Horizontal thumbnail strip (not vertical)
 - [ ] Touch-friendly variant tiles and accordion targets (adequate tap size and spacing)
 - [ ] Add to cart and Buy it now buttons are full width

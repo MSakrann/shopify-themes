@@ -27,7 +27,6 @@
   <div class="glocket-product__layout page-width">
     <div class="glocket-product__media">
       {% render 'glocket-gallery', product: product, section: section %}
-      {% render 'glocket-accordion', blocks: section.blocks %}
     </div>
 
     <div class="glocket-product__info{% if section.settings.enable_sticky_info %} glocket-product__info--sticky{% endif %}">
@@ -203,6 +202,8 @@
         {% endfor %}
       </div>
     </div>
+
+    {% render 'glocket-accordion', blocks: section.blocks %}
   </div>
 </div>
 

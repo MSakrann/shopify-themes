@@ -15,7 +15,23 @@
 @media screen and (min-width: 990px) {
   .glocket-product__layout {
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    column-gap: 3rem;
+    row-gap: 0;
+  }
+
+  .glocket-product__media {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .glocket-product__info {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .glocket-product__layout > .glocket-accordion {
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .glocket-product__info--sticky {
@@ -283,7 +299,7 @@
 }
 
 @media screen and (min-width: 990px) {
-  .glocket-gallery {
+  .glocket-gallery:has(.glocket-gallery__thumbs) {
     grid-template-columns: 72px 1fr;
     align-items: start;
   }
@@ -315,6 +331,7 @@
 }
 
 .glocket-variant-tiles__tile {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
@@ -327,8 +344,20 @@
 
 .glocket-variant-tiles__tile input {
   position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
   opacity: 0;
-  pointer-events: none;
+  white-space: nowrap;
+}
+
+.glocket-variant-tiles__tile:has(input:focus-visible) {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 .glocket-variant-tiles__tile.is-selected {
@@ -354,6 +383,6 @@
 }
 
 .glocket-variant-tiles__label {
-  font-size: 0.85rem;
+  font-size: 1.3rem;
   line-height: 1.2;
 }

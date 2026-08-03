@@ -1,5 +1,8 @@
 (function () {
   function initGallery(root) {
+    if (root.dataset.galleryInitialized) return;
+    root.dataset.galleryInitialized = 'true';
+
     var image = root.querySelector('.glocket-gallery__image');
     if (!image) return;
     root.querySelectorAll('.glocket-gallery__thumb').forEach(function (thumb) {
@@ -21,15 +24,17 @@
     root.dataset.variantTilesInitialized = 'true';
 
     var productRoot = root.closest('.glocket-product');
-    var radioGroupName = 'glocket-variant-' + (productRoot ? productRoot.id : 'product');
-    root.querySelectorAll('input[type="radio"][data-variant-id]').forEach(function (input) {
-      input.removeAttribute('form');
-      input.name = radioGroupName;
-    });
 
     root.addEventListener('change', function (event) {
       var input = event.target;
       if (!input.matches('input[type="radio"][data-variant-id]')) return;
+
+      var variantInput = productRoot && productRoot.querySelector('[data-glocket-variant-id]');
+      var variantId = input.getAttribute('data-variant-id');
+      if (variantInput && variantId) {
+        variantInput.value = variantId;
+        variantInput.dispatchEvent(new Event('change', { bubbles: true }));
+      }
 
       root.querySelectorAll('.glocket-variant-tiles__tile').forEach(function (tile) {
         tile.classList.remove('is-selected');
@@ -40,8 +45,8 @@
 
       var mediaSrc = input.getAttribute('data-media-src');
       if (mediaSrc) {
-        var productRoot = root.closest('.glocket-product') || document;
-        var image = productRoot.querySelector('[data-gallery] .glocket-gallery__image');
+        var galleryRoot = productRoot || document;
+        var image = galleryRoot.querySelector('[data-gallery] .glocket-gallery__image');
         if (image) {
           image.src = mediaSrc;
           image.srcset = '';
@@ -103,7 +108,6 @@
     var price = root.querySelector('[data-glocket-price]');
     var compare = root.querySelector('[data-glocket-compare]');
     var submit = root.querySelector('[data-glocket-atc]');
-    var variantInput = root.querySelector('[data-glocket-variant-id]');
     var moneyFormat = root.dataset.moneyFormat || '${{amount}}';
 
     if (price) price.textContent = formatMoney(detail.price, moneyFormat);
@@ -112,11 +116,6 @@
       var showCompare = Number(detail.compare) > Number(detail.price);
       compare.hidden = !showCompare;
       compare.textContent = showCompare ? formatMoney(detail.compare, moneyFormat) : '';
-    }
-
-    if (variantInput && detail.id) {
-      variantInput.value = detail.id;
-      variantInput.dispatchEvent(new Event('change', { bubbles: true }));
     }
 
     if (submit) {
