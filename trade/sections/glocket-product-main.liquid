@@ -1,0 +1,838 @@
+{% comment %}
+  GLOCKET — Main Product Section
+  Layout: Left = image gallery + thumbnails | Right = product info
+  Mirrors the Vinia product page hero structure.
+{% endcomment %}
+
+<style>
+  .glocket-hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: inherit;
+  }
+
+  /* ── Two-column layout ── */
+  .glocket-hero__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .glocket-hero__layout {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  /* ── IMAGE GALLERY ── */
+  .glocket-gallery {
+    position: sticky;
+    top: 20px;
+  }
+
+  .glocket-gallery__main {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #f5f5f5;
+    aspect-ratio: 1 / 1;
+    cursor: zoom-in;
+  }
+
+  .glocket-gallery__main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .glocket-gallery__main img.active {
+    display: block;
+  }
+
+  .glocket-gallery__main-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 12px;
+    pointer-events: none;
+  }
+
+  .glocket-gallery__arrow {
+    pointer-events: all;
+    background: rgba(255,255,255,0.85);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: background 0.2s;
+  }
+
+  .glocket-gallery__arrow:hover { background: #fff; }
+
+  .glocket-gallery__thumbs {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+
+  .glocket-gallery__thumb {
+    flex: 0 0 72px;
+    height: 72px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+    background: #f0f0f0;
+  }
+
+  .glocket-gallery__thumb.active,
+  .glocket-gallery__thumb:hover {
+    border-color: #222;
+  }
+
+  .glocket-gallery__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ── PRODUCT INFO ── */
+  .glocket-info {
+    padding-top: 4px;
+  }
+
+  .glocket-review-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 12px;
+    text-decoration: none;
+  }
+
+  .glocket-review-badge__stars {
+    color: #f4b400;
+    font-size: 15px;
+    letter-spacing: 1px;
+  }
+
+  .glocket-review-badge__divider {
+    color: #ccc;
+  }
+
+  .glocket-info__title {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 10px;
+    color: #111;
+  }
+
+  .glocket-info__subtitle {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+  }
+
+  .glocket-info__desc {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .glocket-info__bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+  }
+
+  .glocket-info__bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 6px;
+  }
+
+  .glocket-info__bullets li::before {
+    content: "✓";
+    color: #27ae60;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── BUNDLE PICKER ── */
+  .glocket-bundle {
+    margin-bottom: 20px;
+  }
+
+  .glocket-bundle__label {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .glocket-bundle__options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .glocket-bundle__option {
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    text-align: center;
+    min-width: 100px;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .glocket-bundle__option.active {
+    border-color: #111;
+    background: #f9f9f9;
+  }
+
+  .glocket-bundle__option:hover {
+    border-color: #888;
+  }
+
+  .glocket-bundle__qty {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+    display: block;
+  }
+
+  .glocket-bundle__badge {
+    display: inline-block;
+    background: #111;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-bottom: 4px;
+  }
+
+  .glocket-bundle__price {
+    font-size: 12px;
+    color: #666;
+    margin-top: 2px;
+  }
+
+  .glocket-bundle__price-original {
+    text-decoration: line-through;
+    color: #aaa;
+    margin-right: 4px;
+  }
+
+  /* ── PRICING CARDS ── */
+  .glocket-pricing {
+    margin-bottom: 20px;
+  }
+
+  .glocket-pricing__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .glocket-pricing__card {
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    position: relative;
+  }
+
+  .glocket-pricing__card.active {
+    border-color: #111;
+  }
+
+  .glocket-pricing__card:hover {
+    border-color: #888;
+  }
+
+  .glocket-pricing__badge {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    background: #111;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  .glocket-pricing__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+  }
+
+  .glocket-pricing__card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111;
+  }
+
+  .glocket-pricing__card-amount {
+    text-align: right;
+  }
+
+  .glocket-pricing__card-original {
+    font-size: 12px;
+    text-decoration: line-through;
+    color: #aaa;
+  }
+
+  .glocket-pricing__card-sale {
+    font-size: 18px;
+    font-weight: 800;
+    color: #111;
+  }
+
+  .glocket-pricing__card-perunit {
+    font-size: 11px;
+    color: #777;
+  }
+
+  .glocket-pricing__card-perks {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .glocket-pricing__card-perks li {
+    font-size: 12px;
+    color: #555;
+    display: flex;
+    gap: 6px;
+  }
+
+  .glocket-pricing__card-perks li::before {
+    content: "✓";
+    color: #27ae60;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .glocket-otp {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .glocket-otp a {
+    font-size: 13px;
+    color: #555;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  /* ── CTA BUTTON ── */
+  .glocket-atc-btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+
+  .glocket-atc-btn:hover { background: #333; }
+  .glocket-atc-btn:disabled { background: #aaa; cursor: not-allowed; }
+
+  /* ── TRUST BADGES ── */
+  .glocket-trust {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    padding: 14px 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+  }
+
+  .glocket-trust__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+    flex: 1;
+  }
+
+  .glocket-trust__icon {
+    font-size: 22px;
+  }
+
+  .glocket-trust__text {
+    font-size: 11px;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.3;
+  }
+
+  /* ── ACCORDION ── */
+  .glocket-accordion {
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .glocket-accordion__item {
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .glocket-accordion__trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+    gap: 10px;
+  }
+
+  .glocket-accordion__trigger:hover { color: #444; }
+
+  .glocket-accordion__icon {
+    font-size: 20px;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: transform 0.25s;
+    color: #888;
+  }
+
+  .glocket-accordion__item.open .glocket-accordion__icon {
+    transform: rotate(45deg);
+  }
+
+  .glocket-accordion__content {
+    display: none;
+    padding: 0 0 14px;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .glocket-accordion__item.open .glocket-accordion__content {
+    display: block;
+  }
+
+  /* ── VARIANT SELECTOR ── */
+  .glocket-variants {
+    margin-bottom: 20px;
+  }
+
+  .glocket-variants__label {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .glocket-variants__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .glocket-variants__btn {
+    padding: 8px 16px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #333;
+  }
+
+  .glocket-variants__btn.active,
+  .glocket-variants__btn:hover {
+    border-color: #111;
+    color: #111;
+  }
+</style>
+
+<section class="glocket-hero" id="glocket-hero">
+  <div class="glocket-hero__layout">
+
+    {%- comment -%} ── LEFT: IMAGE GALLERY ── {%- endcomment -%}
+    <div class="glocket-gallery">
+      <div class="glocket-gallery__main" id="glocket-main-image">
+        {%- for image in product.images -%}
+          <img
+            src="{{ image | image_url: width: 800 }}"
+            alt="{{ image.alt | escape | default: product.title }}"
+            class="{% if forloop.first %}active{% endif %}"
+            data-index="{{ forloop.index0 }}"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            width="800"
+            height="800"
+          >
+        {%- endfor -%}
+        {%- if product.images.size == 0 -%}
+          {{ 'product-1' | placeholder_svg_tag: 'glocket-gallery__placeholder' }}
+        {%- endif -%}
+        {%- if product.images.size > 1 -%}
+          <div class="glocket-gallery__main-nav">
+            <button class="glocket-gallery__arrow" id="glocket-prev" aria-label="Previous image">&#8249;</button>
+            <button class="glocket-gallery__arrow" id="glocket-next" aria-label="Next image">&#8250;</button>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if product.images.size > 1 -%}
+        <div class="glocket-gallery__thumbs" id="glocket-thumbs">
+          {%- for image in product.images -%}
+            <div
+              class="glocket-gallery__thumb {% if forloop.first %}active{% endif %}"
+              data-index="{{ forloop.index0 }}"
+              role="button"
+              tabindex="0"
+              aria-label="View image {{ forloop.index }}"
+            >
+              <img
+                src="{{ image | image_url: width: 150 }}"
+                alt="{{ image.alt | escape | default: product.title }}"
+                loading="lazy"
+                width="72"
+                height="72"
+              >
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ── RIGHT: PRODUCT INFO ── {%- endcomment -%}
+    <div class="glocket-info">
+
+      {%- comment -%} Review badge — links to reviews section {%- endcomment -%}
+      <a href="#glocket-reviews" class="glocket-review-badge">
+        <span class="glocket-review-badge__stars">★★★★★</span>
+        <span>4.8/5.0</span>
+        <span class="glocket-review-badge__divider">|</span>
+        <span>10,000+ Reviews</span>
+      </a>
+
+      {%- comment -%} Title {%- endcomment -%}
+      <h1 class="glocket-info__title">{{ product.title }}</h1>
+
+      {%- if product.metafields.custom.subtitle != blank -%}
+        <p class="glocket-info__subtitle">{{ product.metafields.custom.subtitle }}</p>
+      {%- else -%}
+        <p class="glocket-info__subtitle">The World's Thinnest Suction Cup Phone Sleeve with Built-In Card Holder</p>
+      {%- endif -%}
+
+      <p class="glocket-info__desc">{{ product.description | strip_html | truncatewords: 40 }}</p>
+
+      <ul class="glocket-info__bullets">
+        <li>Attaches to any smooth surface with medical-grade silicon suction</li>
+        <li>Holds up to 3 cards — IDs, credit cards, transit passes</li>
+        <li>Only 4mm thin — barely adds any bulk to your phone</li>
+        <li>Reusable: rinse to restore full suction power</li>
+        <li>No adhesive, no residue, no damage to your case</li>
+      </ul>
+
+      {%- comment -%} Variant selector (if product has variants) {%- endcomment -%}
+      {%- unless product.has_only_default_variant -%}
+        {%- for option in product.options_with_values -%}
+          <div class="glocket-variants">
+            <div class="glocket-variants__label">{{ option.name }}:</div>
+            <div class="glocket-variants__options">
+              {%- for value in option.values -%}
+                <button
+                  class="glocket-variants__btn {% if option.selected_value == value %}active{% endif %}"
+                  data-option-index="{{ forloop.parentloop.index0 }}"
+                  data-value="{{ value | escape }}"
+                >
+                  {{ value }}
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endunless -%}
+
+      {%- comment -%} Bundle / quantity selector {%- endcomment -%}
+      <div class="glocket-bundle">
+        <div class="glocket-bundle__label">How Many?</div>
+        <div class="glocket-bundle__options">
+
+          <div class="glocket-bundle__option active" data-qty="1" data-price="{{ product.price | money_without_trailing_zeros }}">
+            <span class="glocket-bundle__qty">1 Pack</span>
+            <div class="glocket-bundle__price">{{ product.price | money }}</div>
+          </div>
+
+          <div class="glocket-bundle__option" data-qty="2" data-price="{{ product.price | times: 2 | times: 0.85 | money_without_trailing_zeros }}">
+            <span class="glocket-bundle__badge">SAVE 15%</span>
+            <span class="glocket-bundle__qty">2 Pack</span>
+            <div class="glocket-bundle__price">
+              <span class="glocket-bundle__price-original">{{ product.price | times: 2 | money }}</span>
+              {{ product.price | times: 2 | times: 0.85 | money }}
+            </div>
+          </div>
+
+          <div class="glocket-bundle__option" data-qty="3" data-price="{{ product.price | times: 3 | times: 0.75 | money_without_trailing_zeros }}">
+            <span class="glocket-bundle__badge">SAVE 25%</span>
+            <span class="glocket-bundle__qty">3 Pack</span>
+            <div class="glocket-bundle__price">
+              <span class="glocket-bundle__price-original">{{ product.price | times: 3 | money }}</span>
+              {{ product.price | times: 3 | times: 0.75 | money }}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {%- comment -%} Product form (hidden inputs, actual ATC) {%- endcomment -%}
+      {%- form 'product', product, id: 'glocket-product-form', class: 'glocket-form' -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="glocket-variant-id">
+        <input type="hidden" name="quantity" value="1" id="glocket-quantity">
+
+        <button
+          type="submit"
+          name="add"
+          class="glocket-atc-btn"
+          {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+        >
+          {% if product.selected_or_first_available_variant.available %}
+            Add to Cart — <span id="glocket-btn-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+          {% else %}
+            Sold Out
+          {% endif %}
+        </button>
+      {%- endform -%}
+
+      {%- comment -%} Trust badges {%- endcomment -%}
+      <div class="glocket-trust">
+        <div class="glocket-trust__item">
+          <span class="glocket-trust__icon">🚚</span>
+          <span class="glocket-trust__text">Free<br>Shipping</span>
+        </div>
+        <div class="glocket-trust__item">
+          <span class="glocket-trust__icon">🔒</span>
+          <span class="glocket-trust__text">Secure<br>Checkout</span>
+        </div>
+        <div class="glocket-trust__item">
+          <span class="glocket-trust__icon">↩️</span>
+          <span class="glocket-trust__text">30-Day<br>Returns</span>
+        </div>
+      </div>
+
+      {%- comment -%} Accordion tabs {%- endcomment -%}
+      <div class="glocket-accordion">
+
+        <div class="glocket-accordion__item">
+          <button class="glocket-accordion__trigger" aria-expanded="false">
+            Materials & Specs
+            <span class="glocket-accordion__icon">+</span>
+          </button>
+          <div class="glocket-accordion__content">
+            <p>Glocket is made from <strong>100% food-grade, medical-grade silicon</strong> — soft, flexible, and completely non-toxic. The card pocket uses reinforced elastomer for a snug, rattle-free hold.</p>
+            <ul>
+              <li>Material: Medical-grade silicon</li>
+              <li>Thickness: 4mm</li>
+              <li>Card capacity: Up to 3 standard cards</li>
+              <li>Weight: 12g</li>
+              <li>Colors: Clear, Black, White, Blush Pink</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="glocket-accordion__item">
+          <button class="glocket-accordion__trigger" aria-expanded="false">
+            How to Use
+            <span class="glocket-accordion__icon">+</span>
+          </button>
+          <div class="glocket-accordion__content">
+            <p>Attach Glocket to the back of your phone or phone case by pressing firmly for 5–10 seconds. To detach, peel from a corner. If suction weakens, rinse with warm water and let air dry — suction fully restores.</p>
+            <p>Works best on smooth surfaces: glass, silicone cases, polycarbonate cases, and flat-back phones. Not recommended for textured or leather cases.</p>
+          </div>
+        </div>
+
+        <div class="glocket-accordion__item">
+          <button class="glocket-accordion__trigger" aria-expanded="false">
+            30-Day Money-Back Guarantee
+            <span class="glocket-accordion__icon">+</span>
+          </button>
+          <div class="glocket-accordion__content">
+            <p>We're confident you'll love Glocket. If you're not completely satisfied within 30 days of purchase, simply return it and we'll refund your full purchase price — no questions asked. Refund does not include return shipping.</p>
+            <p>This guarantee applies to your first purchase of Glocket made directly from our store.</p>
+          </div>
+        </div>
+
+        <div class="glocket-accordion__item">
+          <button class="glocket-accordion__trigger" aria-expanded="false">
+            Shipping & Delivery
+            <span class="glocket-accordion__icon">+</span>
+          </button>
+          <div class="glocket-accordion__content">
+            <p>Orders ship within <strong>1–2 business days</strong>. Standard delivery takes 3–7 business days within the US. Express (1–2 day) and international shipping are available at checkout.</p>
+            <p>Free standard shipping on all US orders over $25.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var images = document.querySelectorAll('#glocket-main-image img');
+  var thumbs = document.querySelectorAll('.glocket-gallery__thumb');
+  var currentIndex = 0;
+
+  function goTo(index) {
+    if (images.length === 0) return;
+    index = (index + images.length) % images.length;
+    images[currentIndex].classList.remove('active');
+    if (thumbs[currentIndex]) thumbs[currentIndex].classList.remove('active');
+    currentIndex = index;
+    images[currentIndex].classList.add('active');
+    if (thumbs[currentIndex]) thumbs[currentIndex].classList.add('active');
+  }
+
+  thumbs.forEach(function(thumb) {
+    thumb.addEventListener('click', function() { goTo(parseInt(this.dataset.index)); });
+    thumb.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') goTo(parseInt(this.dataset.index)); });
+  });
+
+  var prev = document.getElementById('glocket-prev');
+  var next = document.getElementById('glocket-next');
+  if (prev) prev.addEventListener('click', function() { goTo(currentIndex - 1); });
+  if (next) next.addEventListener('click', function() { goTo(currentIndex + 1); });
+
+  // Touch/swipe support
+  var startX = 0;
+  var mainImg = document.getElementById('glocket-main-image');
+  if (mainImg) {
+    mainImg.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+    mainImg.addEventListener('touchend', function(e) {
+      var diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) goTo(diff > 0 ? currentIndex + 1 : currentIndex - 1);
+    }, { passive: true });
+  }
+
+  // Bundle picker logic
+  var bundleOpts = document.querySelectorAll('.glocket-bundle__option');
+  var qtyInput = document.getElementById('glocket-quantity');
+  var btnPrice = document.getElementById('glocket-btn-price');
+
+  bundleOpts.forEach(function(opt) {
+    opt.addEventListener('click', function() {
+      bundleOpts.forEach(function(o) { o.classList.remove('active'); });
+      this.classList.add('active');
+      if (qtyInput) qtyInput.value = this.dataset.qty;
+      // Update button price display
+      if (btnPrice && this.dataset.price) {
+        var qty = parseInt(this.dataset.qty);
+        var unitPrice = {{ product.price }};
+        var discount = qty === 2 ? 0.85 : qty === 3 ? 0.75 : 1;
+        var total = Math.round(unitPrice * qty * discount);
+        btnPrice.textContent = formatMoney(total);
+      }
+    });
+  });
+
+  function formatMoney(cents) {
+    return '$' + (cents / 100).toFixed(2).replace(/\.00$/, '');
+  }
+
+  // Accordion
+  var triggers = document.querySelectorAll('.glocket-accordion__trigger');
+  triggers.forEach(function(trigger) {
+    trigger.addEventListener('click', function() {
+      var item = this.closest('.glocket-accordion__item');
+      var isOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.glocket-accordion__item').forEach(function(i) {
+        i.classList.remove('open');
+        i.querySelector('.glocket-accordion__trigger').setAttribute('aria-expanded', 'false');
+      });
+      // Toggle clicked
+      if (!isOpen) {
+        item.classList.add('open');
+        this.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Variant buttons
+  var variantBtns = document.querySelectorAll('.glocket-variants__btn');
+  variantBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var optionIndex = this.dataset.optionIndex;
+      document.querySelectorAll('[data-option-index="' + optionIndex + '"]').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      this.classList.add('active');
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Glocket Product Main",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

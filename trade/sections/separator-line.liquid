@@ -1,0 +1,94 @@
+{% comment %}
+  Section: Horizontal Separator Line
+  Usage: Add via Shopify Theme Editor > Add Section > Separator Line
+{% endcomment %}
+
+<div class="separator-wrapper" style="
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  padding-left: {{ section.settings.padding_horizontal }}px;
+  padding-right: {{ section.settings.padding_horizontal }}px;
+">
+  <hr class="separator-line" style="
+    border: none;
+    border-top: {{ section.settings.thickness }}px solid {{ section.settings.color }};
+    margin: 0 auto;
+    width: {{ section.settings.width }}%;
+    opacity: {{ section.settings.opacity | divided_by: 100.0 }};
+  ">
+</div>
+
+{% schema %}
+{
+  "name": "Separator Line",
+  "tag": "section",
+  "class": "section-separator",
+  "settings": [
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Line Color",
+      "default": "#d1d5db"
+    },
+    {
+      "type": "range",
+      "id": "thickness",
+      "label": "Line Thickness (px)",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "width",
+      "label": "Line Width (%)",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "opacity",
+      "label": "Opacity (%)",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "label": "Horizontal Padding (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Separator Line"
+    }
+  ]
+}
+{% endschema %}
