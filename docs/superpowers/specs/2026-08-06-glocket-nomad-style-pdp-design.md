@@ -41,6 +41,8 @@ Build a second editable product template for POV Glocket that matches the Nomad 
 | Reviews | Editable theme content only (no reviews app) |
 | Header / announcement / footer | Out of scope; keep Trade globals |
 | Not included | Nomad gift popup, geo shipping banner, subscriptions, review apps, Nomad brand assets |
+| Emojis | None in defaults, UI chrome, section labels, or placeholder copy |
+| Mobile | First-class: stacked cards, touch targets, horizontal thumb/cross-sell scroll, readable type at ≤749px |
 
 ---
 
@@ -238,7 +240,8 @@ Merchants can reorder/remove/add instances in the theme editor.
 ## 7. Content & compliance rules
 
 - Defaults are Glocket placeholders, not Nomad product copy or images
-- No emojis in shipped default UI chrome
+- No emojis anywhere in shipped defaults, UI chrome, schema labels, or placeholder copy
+- Mobile-first breakpoints: buy box stacks; cards full-width with comfortable padding; pills wrap; thumbs and cross-sell scroll horizontally with peek; CTAs full-width; no horizontal page overflow
 - No grey image stage backgrounds
 - All merchant-facing strings editable via section/block settings
 - Color via Trade color schemes only (section + card), not hard-coded Nomad brand colors
@@ -264,10 +267,11 @@ Merchants can reorder/remove/add instances in the theme editor.
 
 ### 8.3 QA checklist
 
-- Desktop + mobile layout of buy box and cards
+- Desktop + mobile layout of buy box and cards (no horizontal overflow; usable touch targets)
 - Pill and tile variant modes both work; price/media update
 - ATC + Buy it now work
 - No grey behind gallery or feature images
+- No emojis in any default content or chrome
 - Font renders as ClashDisplay-Medium on Nomad sections
 - Accordion overview / specs / FAQ open-close
 - Theme editor can edit all sections/blocks
