@@ -11,7 +11,9 @@
 .nomad-story-banner__link,
 .nomad-accordion__trigger,
 .nomad-specs__heading,
-.nomad-faq__heading {
+.nomad-faq__heading,
+.nomad-reviews__heading,
+.nomad-reviews__card-title {
   font-family: "ClashDisplay-Medium", sans-serif;
 }
 
@@ -526,5 +528,103 @@
   .nomad-specs .nomad-accordion__panel,
   .nomad-faq .nomad-accordion__panel {
     padding: 0 1rem 1.2rem;
+  }
+}
+
+/* Reviews */
+.nomad-reviews__summary {
+  max-width: 40rem;
+  margin: 0 0 1.25rem;
+}
+
+.nomad-reviews__heading {
+  margin: 0 0 0.65rem;
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+}
+
+.nomad-reviews__rating {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.nomad-reviews__count {
+  margin: 0;
+  line-height: 1.45;
+  color: rgba(var(--color-foreground), 0.7);
+}
+
+.nomad-reviews__items {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--nomad-gap);
+}
+
+.nomad-reviews__card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 1.25rem 1.25rem 1.35rem;
+}
+
+.nomad-reviews__media {
+  margin: 0 0 0.85rem;
+}
+
+.nomad-reviews__avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nomad-reviews__card-rating {
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.nomad-reviews__card-title {
+  margin: 0 0 0.55rem;
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.nomad-reviews__card-body {
+  flex: 1 1 auto;
+  margin: 0 0 1rem;
+}
+
+.nomad-reviews__card-body > :first-child {
+  margin-top: 0;
+}
+
+.nomad-reviews__card-body > :last-child {
+  margin-bottom: 0;
+}
+
+.nomad-reviews__author {
+  margin-top: auto;
+}
+
+.nomad-reviews__author cite {
+  font-style: normal;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 989px) {
+  .nomad-reviews__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nomad-reviews__items {
+    grid-template-columns: 1fr;
+  }
+
+  .nomad-reviews__card {
+    padding: 1rem 1rem 1.15rem;
   }
 }
