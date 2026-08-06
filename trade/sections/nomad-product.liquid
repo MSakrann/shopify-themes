@@ -78,10 +78,10 @@
         </s>
       </div>
 
-      {% if section.settings.custom_description != blank %}
-        <div class="nomad-product__description nomad-body rte">{{ section.settings.custom_description }}</div>
-      {% elsif section.settings.use_product_description and product.description != blank %}
+      {% if section.settings.use_product_description and product.description != blank %}
         <div class="nomad-product__description nomad-body rte">{{ product.description }}</div>
+      {% elsif section.settings.custom_description != blank %}
+        <div class="nomad-product__description nomad-body rte">{{ section.settings.custom_description }}</div>
       {% endif %}
 
       {% if section.settings.variant_style == 'tiles' %}
@@ -285,8 +285,7 @@
     {
       "type": "richtext",
       "id": "custom_description",
-      "label": "Custom description",
-      "default": "<p>Track what matters with Glocket. Built for everyday carry and clear status at a glance.</p>"
+      "label": "Custom description"
     },
     {
       "type": "checkbox",

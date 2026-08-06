@@ -41,11 +41,28 @@
     return cleanFormat.replace(token[0], amount);
   }
 
-  function updateGalleryImage(productRoot, mediaSrc) {
-    if (!mediaSrc || !productRoot) return;
-    var image = productRoot.querySelector('[data-gallery] .nomad-gallery__image');
+  function updateGalleryImage(productRoot, mediaSrc, mediaId) {
+    if ((!mediaSrc && !mediaId) || !productRoot) return;
+    var gallery = productRoot.querySelector('[data-gallery]');
+    if (!gallery) return;
+    var image = gallery.querySelector('.nomad-gallery__image');
     if (!image) return;
-    image.src = mediaSrc;
+
+    var activeThumb = null;
+    gallery.querySelectorAll('.nomad-gallery__thumb').forEach(function (thumb) {
+      var thumbSrc = thumb.getAttribute('data-media-src') || '';
+      var thumbId = thumb.getAttribute('data-media-id') || '';
+      var isMatch = mediaId
+        ? thumbId && String(thumbId) === String(mediaId)
+        : !!mediaSrc && thumbSrc === mediaSrc;
+      thumb.classList.toggle('is-active', isMatch);
+      if (isMatch) activeThumb = thumb;
+    });
+
+    var nextSrc =
+      (activeThumb && activeThumb.getAttribute('data-media-src')) || mediaSrc;
+    if (!nextSrc) return;
+    image.src = nextSrc;
     image.srcset = '';
   }
 
@@ -63,6 +80,17 @@
     }
     if (variant.featured_media && variant.featured_media.preview_image) {
       return variant.featured_media.preview_image.src || '';
+    }
+    return '';
+  }
+
+  function getVariantMediaId(variant) {
+    if (!variant) return '';
+    if (variant.featured_media && variant.featured_media.id) {
+      return String(variant.featured_media.id);
+    }
+    if (variant.featured_image && variant.featured_image.id) {
+      return String(variant.featured_image.id);
     }
     return '';
   }
@@ -193,7 +221,11 @@
 
       var variantId = String(variant.id);
       setVariantId(productRoot, variantId);
-      updateGalleryImage(productRoot, getVariantMediaSrc(variant));
+      updateGalleryImage(
+        productRoot,
+        getVariantMediaSrc(variant),
+        getVariantMediaId(variant)
+      );
 
       productRoot.dispatchEvent(
         new CustomEvent('nomad:variant-change', {
