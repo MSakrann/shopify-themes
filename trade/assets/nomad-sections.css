@@ -3,8 +3,21 @@
 .nomad-card,
 .nomad-heading,
 .nomad-body,
-.nomad-btn {
+.nomad-btn,
+.nomad-eyebrow,
+.nomad-cross-sell__title,
+.nomad-cross-sell__subtitle,
+.nomad-cross-sell__price,
+.nomad-story-banner__link {
   font-family: "ClashDisplay-Medium", sans-serif;
+}
+
+.nomad-eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(var(--color-foreground), 0.7);
 }
 
 .nomad-section {
@@ -195,5 +208,205 @@
 
   .nomad-feature-split__grid--media-right .nomad-feature-split__media {
     order: 2;
+  }
+}
+
+/* Story banner */
+.nomad-story-banner__grid {
+  display: grid;
+  gap: 0;
+}
+
+.nomad-story-banner__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  min-width: 0;
+}
+
+.nomad-story-banner__heading {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.nomad-story-banner__body > :first-child {
+  margin-top: 0;
+}
+
+.nomad-story-banner__body > :last-child {
+  margin-bottom: 0;
+}
+
+.nomad-story-banner__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 0.25rem;
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.nomad-story-banner__link[aria-disabled="true"] {
+  opacity: 0.55;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.nomad-story-banner__media {
+  min-width: 0;
+  min-height: 0;
+  background: transparent;
+}
+
+.nomad-story-banner__media img,
+.nomad-story-banner__media .placeholder-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: transparent;
+}
+
+@media screen and (min-width: 750px) {
+  .nomad-story-banner__grid {
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: stretch;
+  }
+
+  .nomad-story-banner__media {
+    height: 100%;
+  }
+
+  .nomad-story-banner__media img,
+  .nomad-story-banner__media .placeholder-svg {
+    height: 100%;
+    min-height: 100%;
+    aspect-ratio: auto;
+    object-fit: cover;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nomad-story-banner__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nomad-story-banner__content {
+    order: 2;
+    text-align: center;
+    padding: 1.25rem 1rem 1.5rem;
+    align-items: center;
+  }
+
+  .nomad-story-banner__media {
+    order: 1;
+  }
+
+  .nomad-story-banner__link {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+/* Cross-sell */
+.nomad-cross-sell__heading {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+}
+
+.nomad-cross-sell__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nomad-cross-sell__item {
+  min-width: 0;
+}
+
+.nomad-cross-sell__link {
+  display: block;
+  height: 100%;
+  padding: 1rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.nomad-cross-sell__media {
+  margin-bottom: 0.75rem;
+  border-radius: calc(var(--nomad-radius) * 0.65);
+  overflow: hidden;
+  background: transparent;
+}
+
+.nomad-cross-sell__media img,
+.nomad-cross-sell__media .placeholder-svg {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: transparent;
+}
+
+.nomad-cross-sell__title,
+.nomad-cross-sell__subtitle,
+.nomad-cross-sell__price {
+  margin: 0 0 0.25rem;
+  line-height: 1.3;
+}
+
+.nomad-cross-sell__subtitle {
+  color: rgba(var(--color-foreground), 0.65);
+  font-size: 0.95rem;
+}
+
+.nomad-cross-sell__price {
+  margin-bottom: 0;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 989px) {
+  .nomad-cross-sell__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nomad-cross-sell__heading {
+    margin-bottom: 1rem;
+  }
+
+  .nomad-cross-sell__list {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* Peek next card */
+    padding-right: 1.5rem;
+  }
+
+  .nomad-cross-sell__list::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  .nomad-cross-sell__item {
+    flex: 0 0 42%;
+    max-width: 180px;
+    scroll-snap-align: start;
+  }
+
+  .nomad-cross-sell__link {
+    padding: 0.85rem;
   }
 }
