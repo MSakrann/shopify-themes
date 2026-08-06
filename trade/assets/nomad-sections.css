@@ -1,0 +1,124 @@
+.nomad-page,
+.nomad-section,
+.nomad-card,
+.nomad-heading,
+.nomad-body,
+.nomad-btn {
+  font-family: "ClashDisplay-Medium", sans-serif;
+}
+
+.nomad-section {
+  --nomad-radius: 24px;
+  --nomad-gap: 1rem;
+  padding-top: var(--nomad-pad-top, 16px);
+  padding-bottom: var(--nomad-pad-bottom, 16px);
+}
+
+.nomad-section__inner {
+  max-width: var(--page-width, 1200px);
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.nomad-card {
+  border-radius: var(--nomad-radius);
+  overflow: hidden;
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+.nomad-heading {
+  margin: 0 0 1rem;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+}
+
+.nomad-body {
+  margin: 0 0 1.25rem;
+  line-height: 1.55;
+}
+
+.nomad-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.9rem 1.5rem;
+  border-radius: 999px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  background: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+}
+
+.nomad-media {
+  background: transparent;
+  overflow: hidden;
+}
+
+.nomad-media img,
+.nomad-media .placeholder-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: transparent;
+}
+
+.nomad-media-fit--cover img,
+.nomad-media-fit--cover .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.nomad-media-fit--contain img,
+.nomad-media-fit--contain .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  background: transparent;
+}
+
+.nomad-media-fit--fill img,
+.nomad-media-fit--fill .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: fill;
+}
+
+.nomad-media-fit--extend img,
+.nomad-media-fit--extend .placeholder-svg {
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+/* Feature split shell (filled in Task 5) */
+.nomad-feature-split__grid {
+  display: grid;
+  gap: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .nomad-feature-split__grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .nomad-section__inner {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .nomad-btn {
+    width: 100%;
+  }
+}

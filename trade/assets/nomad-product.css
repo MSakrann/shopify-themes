@@ -1,0 +1,21 @@
+.nomad-product,
+.nomad-product * {
+  font-family: "ClashDisplay-Medium", sans-serif;
+}
+
+.nomad-product {
+  --nomad-radius: 24px;
+}
+
+.nomad-product__layout {
+  display: grid;
+  gap: 1rem;
+}
+
+@media screen and (min-width: 990px) {
+  .nomad-product__layout {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 1rem;
+    align-items: start;
+  }
+}
