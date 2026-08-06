@@ -1,0 +1,178 @@
+{{ 'nomad-sections.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #NomadFeatureSplit-{{ section.id }} {
+    --nomad-pad-top: {{ section.settings.padding_top }}px;
+    --nomad-pad-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{% endstyle %}
+
+<div
+  id="NomadFeatureSplit-{{ section.id }}"
+  class="nomad-section nomad-feature-split color-{{ section.settings.color_scheme }} gradient"
+>
+  <div class="nomad-section__inner">
+    <div class="nomad-card color-{{ section.settings.card_color_scheme }}">
+      <div class="nomad-feature-split__grid{% if section.settings.media_position == 'right' %} nomad-feature-split__grid--media-right{% endif %}">
+        <div class="nomad-feature-split__media nomad-media nomad-media-fit--{{ section.settings.image_fit }}">
+          {% if section.settings.image != blank %}
+            {{
+              section.settings.image
+              | image_url: width: 1800
+              | image_tag:
+                class: 'nomad-feature-split__image',
+                loading: 'lazy',
+                sizes: '(min-width: 750px) 50vw, 100vw',
+                widths: '375, 550, 750, 1100, 1500, 1800'
+            }}
+          {% else %}
+            {{ 'image' | placeholder_svg_tag: 'nomad-feature-split__placeholder placeholder-svg' }}
+          {% endif %}
+        </div>
+
+        <div class="nomad-feature-split__content">
+          {% if section.settings.heading != blank %}
+            <h2 class="nomad-heading nomad-feature-split__heading">{{ section.settings.heading }}</h2>
+          {% endif %}
+          {% if section.settings.body != blank %}
+            <div class="nomad-body nomad-feature-split__body rte">{{ section.settings.body }}</div>
+          {% endif %}
+          {% if section.settings.cta_label != blank %}
+            <a
+              class="nomad-btn"
+              {% if section.settings.cta_link == blank %}
+                role="link"
+                aria-disabled="true"
+              {% else %}
+                href="{{ section.settings.cta_link }}"
+              {% endif %}
+            >
+              {{ section.settings.cta_label | escape }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Nomad feature split",
+  "tag": "section",
+  "class": "section-nomad-feature-split",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A feature worth a closer look"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Pair a focused product detail with a clear explanation of how it improves the everyday experience.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover (crop to fill)"
+        },
+        {
+          "value": "contain",
+          "label": "Contain (fit inside)"
+        },
+        {
+          "value": "fill",
+          "label": "Fill (stretch)"
+        },
+        {
+          "value": "extend",
+          "label": "Extend (show full image)"
+        }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Media position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "card_color_scheme",
+      "label": "Card color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nomad feature split"
+    }
+  ]
+}
+{% endschema %}

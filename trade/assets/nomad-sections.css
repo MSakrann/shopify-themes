@@ -99,16 +99,78 @@
   object-fit: contain;
 }
 
-/* Feature split shell (filled in Task 5) */
+/* Feature split */
 .nomad-feature-split__grid {
   display: grid;
   gap: 0;
+}
+
+.nomad-feature-split__media {
+  min-width: 0;
+  min-height: 0;
+  background: transparent;
+}
+
+.nomad-feature-split__media img,
+.nomad-feature-split__media .placeholder-svg {
+  background: transparent;
+}
+
+.nomad-feature-split__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  min-width: 0;
+}
+
+.nomad-feature-split__heading {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.nomad-feature-split__body > :first-child {
+  margin-top: 0;
+}
+
+.nomad-feature-split__body > :last-child {
+  margin-bottom: 0;
+}
+
+.nomad-feature-split__grid--media-right .nomad-feature-split__media {
+  order: 2;
 }
 
 @media screen and (min-width: 750px) {
   .nomad-feature-split__grid {
     grid-template-columns: 1fr 1fr;
     align-items: stretch;
+  }
+
+  .nomad-feature-split__media {
+    height: 100%;
+  }
+
+  .nomad-feature-split__media.nomad-media-fit--cover img,
+  .nomad-feature-split__media.nomad-media-fit--cover .placeholder-svg,
+  .nomad-feature-split__media.nomad-media-fit--contain img,
+  .nomad-feature-split__media.nomad-media-fit--contain .placeholder-svg,
+  .nomad-feature-split__media.nomad-media-fit--fill img,
+  .nomad-feature-split__media.nomad-media-fit--fill .placeholder-svg {
+    height: 100%;
+    min-height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .nomad-feature-split__media.nomad-media-fit--extend {
+    display: flex;
+    align-items: center;
+  }
+
+  .nomad-feature-split__media.nomad-media-fit--extend img,
+  .nomad-feature-split__media.nomad-media-fit--extend .placeholder-svg {
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
   }
 }
 
@@ -120,5 +182,18 @@
 
   .nomad-btn {
     width: 100%;
+  }
+
+  .nomad-feature-split__content {
+    text-align: center;
+    padding: 1.25rem 1rem 1.5rem;
+  }
+
+  .nomad-feature-split__content .nomad-btn {
+    width: 100%;
+  }
+
+  .nomad-feature-split__grid--media-right .nomad-feature-split__media {
+    order: 2;
   }
 }
