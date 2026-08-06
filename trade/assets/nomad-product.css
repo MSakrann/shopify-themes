@@ -60,11 +60,11 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  width: 100%;
+  max-width: none;
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  /* Peek next thumb: show ~3.4 thumbs on narrow viewports */
-  max-width: calc((72px * 3) + (0.5rem * 3) + 28px);
 }
 
 .nomad-gallery__thumbs::-webkit-scrollbar {
@@ -306,8 +306,8 @@
 
 .nomad-variant-tiles__label {
   display: block;
-  padding: 0 0.35rem 0.15rem;
-  font-size: 1.1rem;
+  padding: 0 0.35rem 8px;
+  font-size: 11px;
   line-height: 1.25;
   word-break: break-word;
   overflow-wrap: anywhere;
@@ -364,6 +364,7 @@
 .nomad-product__overview,
 .nomad-product__also-bought {
   padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
+  padding-top: 36px;
   box-sizing: border-box;
 }
 
