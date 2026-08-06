@@ -426,20 +426,25 @@
   font-size: clamp(1.75rem, 3vw, 2.4rem);
 }
 
-/* Accordion polish (full box border + tap area) */
-.nomad-accordion__item {
-  margin: 0 0 0.75rem;
+/* Gaps on block wrappers — accordion items are alone inside each wrapper,
+   so :last-child on .nomad-accordion__item would always match and kill spacing */
+.nomad-specs__item:not(:last-child),
+.nomad-faq__item:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+/* Accordion polish scoped to specs/FAQ (avoids overriding product overview) */
+.nomad-specs .nomad-accordion__item,
+.nomad-faq .nomad-accordion__item {
+  margin: 0;
   border: 1px solid rgba(var(--color-foreground), 0.2);
   border-radius: calc(var(--nomad-radius) * 0.75);
   background: transparent;
   overflow: hidden;
 }
 
-.nomad-accordion__item:last-child {
-  margin-bottom: 0;
-}
-
-.nomad-accordion__trigger {
+.nomad-specs .nomad-accordion__trigger,
+.nomad-faq .nomad-accordion__trigger {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -455,11 +460,13 @@
   box-sizing: border-box;
 }
 
-.nomad-accordion__trigger::-webkit-details-marker {
+.nomad-specs .nomad-accordion__trigger::-webkit-details-marker,
+.nomad-faq .nomad-accordion__trigger::-webkit-details-marker {
   display: none;
 }
 
-.nomad-accordion__trigger::after {
+.nomad-specs .nomad-accordion__trigger::after,
+.nomad-faq .nomad-accordion__trigger::after {
   content: "";
   flex: 0 0 0.65rem;
   width: 0.65rem;
@@ -471,29 +478,35 @@
   transition: transform 160ms ease;
 }
 
-.nomad-accordion__item[open] > .nomad-accordion__trigger::after {
+.nomad-specs .nomad-accordion__item[open] > .nomad-accordion__trigger::after,
+.nomad-faq .nomad-accordion__item[open] > .nomad-accordion__trigger::after {
   transform: translateY(0.15rem) rotate(225deg);
 }
 
-.nomad-accordion__trigger:focus-visible {
+.nomad-specs .nomad-accordion__trigger:focus-visible,
+.nomad-faq .nomad-accordion__trigger:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: -2px;
 }
 
-.nomad-accordion__panel {
+.nomad-specs .nomad-accordion__panel,
+.nomad-faq .nomad-accordion__panel {
   padding: 0 1.2rem 1.15rem;
   line-height: 1.55;
 }
 
-.nomad-accordion__panel > :first-child {
+.nomad-specs .nomad-accordion__panel > :first-child,
+.nomad-faq .nomad-accordion__panel > :first-child {
   margin-top: 0;
 }
 
-.nomad-accordion__panel > :last-child {
+.nomad-specs .nomad-accordion__panel > :last-child,
+.nomad-faq .nomad-accordion__panel > :last-child {
   margin-bottom: 0;
 }
 
-.nomad-accordion__panel ul {
+.nomad-specs .nomad-accordion__panel ul,
+.nomad-faq .nomad-accordion__panel ul {
   margin: 0;
   padding-left: 1.2rem;
 }
@@ -504,12 +517,14 @@
     padding: 1rem 1rem 1.15rem;
   }
 
-  .nomad-accordion__trigger {
+  .nomad-specs .nomad-accordion__trigger,
+  .nomad-faq .nomad-accordion__trigger {
     min-height: 52px;
     padding: 1.15rem 1rem;
   }
 
-  .nomad-accordion__panel {
+  .nomad-specs .nomad-accordion__panel,
+  .nomad-faq .nomad-accordion__panel {
     padding: 0 1rem 1.2rem;
   }
 }
