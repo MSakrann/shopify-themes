@@ -340,3 +340,242 @@
     padding: 0 1rem 1.15rem;
   }
 }
+
+/* Buy box cards */
+.nomad-product__gallery,
+.nomad-product__info,
+.nomad-product__overview,
+.nomad-product__also-bought {
+  padding: 1.25rem;
+}
+
+.nomad-product__info {
+  min-width: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .nomad-product__info--sticky {
+    position: sticky;
+    top: 2rem;
+  }
+}
+
+.nomad-product__social-proof {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+  margin: 0 0 1rem;
+  color: inherit;
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+
+.nomad-product__social-proof--link:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.nomad-product__title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2.4rem, 3.5vw, 3.6rem);
+}
+
+.nomad-product__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+}
+
+.nomad-product__price-current {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.nomad-product__price-compare {
+  color: rgba(var(--color-foreground), 0.6);
+  font-size: 1.6rem;
+}
+
+.nomad-product__description {
+  margin: 0 0 1.25rem;
+}
+
+.nomad-product__badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 0 0 1.25rem;
+  padding: 0.45rem 1rem;
+  border: 1px solid rgba(var(--color-foreground), 0.2);
+  border-radius: 999px;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+.nomad-product__quantity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 1.25rem;
+  font-weight: 600;
+}
+
+.nomad-product__quantity-input {
+  width: 8rem;
+  min-height: 48px;
+  padding: 0.75rem;
+  border: 1px solid rgba(var(--color-foreground), 0.25);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.nomad-product__quantity-input:focus-visible {
+  outline: 2px solid rgb(var(--color-foreground));
+  outline-offset: 2px;
+}
+
+.nomad-product__buttons {
+  display: grid;
+  gap: 0.75rem;
+  max-width: none;
+}
+
+.nomad-product__atc {
+  width: 100%;
+  min-height: 48px;
+  font-weight: 700;
+}
+
+.nomad-product .shopify-payment-button__button {
+  font-family: inherit;
+  min-height: 48px;
+  border-radius: 999px !important;
+}
+
+.nomad-product .shopify-payment-button__button--unbranded,
+.nomad-product .shopify-payment-button__button--unbranded:hover:not([disabled]),
+.nomad-product .shopify-payment-button__button--branded,
+.nomad-product .shopify-payment-button__button--branded:hover:not([disabled]),
+.nomad-product .shopify-payment-button__button [role='button'],
+.nomad-product .shopify-payment-button__button [role='button']:hover:not([disabled]) {
+  background-color: rgba(var(--color-button), var(--alpha-button-background)) !important;
+  background: rgba(var(--color-button), var(--alpha-button-background)) !important;
+  color: rgb(var(--color-button-text)) !important;
+  border-color: rgba(var(--color-button), var(--alpha-button-border)) !important;
+  border-radius: 999px !important;
+}
+
+.nomad-product .shopify-payment-button__more-options {
+  color: rgb(var(--color-foreground));
+}
+
+.nomad-product__trust-note {
+  margin: 1rem 0 0;
+  font-size: 1.2rem;
+  line-height: 1.45;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.nomad-product__overview,
+.nomad-product__also-bought {
+  margin-top: 1rem;
+}
+
+.nomad-product__also-bought-heading {
+  margin: 0 0 1rem;
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+}
+
+.nomad-product__also-bought-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nomad-product__also-bought-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.nomad-product__also-bought-media {
+  margin-bottom: 0.65rem;
+  border-radius: calc(var(--nomad-radius) * 0.65);
+  overflow: hidden;
+  background: transparent;
+}
+
+.nomad-product__also-bought-media img,
+.nomad-product__also-bought-media .placeholder-svg {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  background: transparent;
+}
+
+.nomad-product__also-bought-title,
+.nomad-product__also-bought-meta,
+.nomad-product__also-bought-price {
+  margin: 0 0 0.25rem;
+  line-height: 1.3;
+}
+
+.nomad-product__also-bought-meta {
+  color: rgba(var(--color-foreground), 0.65);
+  font-size: 1.2rem;
+}
+
+.nomad-product__also-bought-price {
+  font-weight: 700;
+}
+
+@media screen and (max-width: 749px) {
+  .nomad-product__gallery,
+  .nomad-product__info,
+  .nomad-product__overview,
+  .nomad-product__also-bought {
+    padding: 1rem;
+  }
+
+  .nomad-product__info--sticky {
+    position: static;
+  }
+
+  .nomad-product__atc,
+  .nomad-product .shopify-payment-button,
+  .nomad-product .shopify-payment-button__button {
+    width: 100%;
+  }
+
+  .nomad-product__also-bought-list {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* Peek next card */
+    padding-right: 1.5rem;
+  }
+
+  .nomad-product__also-bought-list::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  .nomad-product__also-bought-item {
+    flex: 0 0 42%;
+    max-width: 160px;
+  }
+}

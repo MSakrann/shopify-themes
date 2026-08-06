@@ -1,0 +1,489 @@
+{{ 'nomad-product.css' | asset_url | stylesheet_tag }}
+{{ 'nomad-sections.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'nomad-product.js' | asset_url }}" defer></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign product_form_id = 'NomadProductForm-' | append: section.id
+  assign social_proof = section.blocks | where: 'type', 'social_proof' | first
+  assign badge_block = section.blocks | where: 'type', 'badge' | first
+  assign trust_note = section.blocks | where: 'type', 'trust_note' | first
+  assign accordion_blocks = section.blocks | where: 'type', 'accordion_item'
+  assign also_bought_blocks = section.blocks | where: 'type', 'also_bought'
+-%}
+
+{% style %}
+  #NomadProduct-{{ section.id }} {
+    --nomad-pad-top: {{ section.settings.padding_top }}px;
+    --nomad-pad-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{% endstyle %}
+
+<section
+  id="NomadProduct-{{ section.id }}"
+  class="nomad-section nomad-product color-{{ section.settings.color_scheme }} gradient"
+  data-nomad-product
+  data-product-id="{{ product.id }}"
+  data-variants="{{ product.variants | json | escape }}"
+  data-money-format="{{ shop.money_format | escape }}"
+  data-add-to-cart-label="{{ section.settings.add_to_cart_label | escape }}"
+  data-sold-out-label="{{ 'products.product.sold_out' | t | escape }}"
+>
+  <div class="nomad-section__inner nomad-product__layout">
+    <div class="nomad-product__gallery nomad-card color-{{ section.settings.card_color_scheme }}">
+      {% render 'nomad-gallery', product: product, section: section %}
+    </div>
+
+    <div class="nomad-product__info nomad-card color-{{ section.settings.card_color_scheme }}{% if section.settings.enable_sticky_info %} nomad-product__info--sticky{% endif %}">
+      {% if social_proof %}
+        {% if social_proof.settings.link != blank %}
+          <a
+            class="nomad-product__social-proof nomad-product__social-proof--link"
+            href="{{ social_proof.settings.link }}"
+            {{ social_proof.shopify_attributes }}
+          >
+        {% else %}
+          <div class="nomad-product__social-proof" {{ social_proof.shopify_attributes }}>
+        {% endif %}
+          {% if social_proof.settings.rating_text != blank %}
+            <span class="nomad-product__social-proof-rating">{{ social_proof.settings.rating_text | escape }}</span>
+          {% endif %}
+          {% if social_proof.settings.reviews_text != blank %}
+            <span class="nomad-product__social-proof-reviews">{{ social_proof.settings.reviews_text | escape }}</span>
+          {% endif %}
+          {% if social_proof.settings.customers_text != blank %}
+            <span class="nomad-product__social-proof-customers">{{ social_proof.settings.customers_text | escape }}</span>
+          {% endif %}
+        {% if social_proof.settings.link != blank %}
+          </a>
+        {% else %}
+          </div>
+        {% endif %}
+      {% endif %}
+
+      <h1 class="nomad-product__title nomad-heading">{{ product.title | escape }}</h1>
+
+      <div class="nomad-product__price price">
+        <span class="nomad-product__price-current price-item price-item--regular" data-nomad-price>
+          {{- current_variant.price | money -}}
+        </span>
+        <s
+          class="nomad-product__price-compare price-item price-item--sale"
+          data-nomad-compare
+          {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}
+        >
+          {{- current_variant.compare_at_price | money -}}
+        </s>
+      </div>
+
+      {% if section.settings.custom_description != blank %}
+        <div class="nomad-product__description nomad-body rte">{{ section.settings.custom_description }}</div>
+      {% elsif section.settings.use_product_description and product.description != blank %}
+        <div class="nomad-product__description nomad-body rte">{{ product.description }}</div>
+      {% endif %}
+
+      {% if section.settings.variant_style == 'tiles' %}
+        {% render 'nomad-variant-tiles',
+          product: product,
+          product_form_id: product_form_id,
+          variant_heading: section.settings.variant_heading
+        %}
+      {% else %}
+        {% render 'nomad-variant-pills', product: product, product_form_id: product_form_id %}
+      {% endif %}
+
+      {% if badge_block and badge_block.settings.text != blank %}
+        <p class="nomad-product__badge" {{ badge_block.shopify_attributes }}>
+          {{ badge_block.settings.text | escape }}
+        </p>
+      {% endif %}
+
+      <product-form class="nomad-product__product-form product-form" data-section-id="{{ section.id }}">
+        <div class="product-form__error-message-wrapper" role="alert" hidden>
+          <span class="product-form__error-message"></span>
+        </div>
+
+        {% form 'product',
+          product,
+          id: product_form_id,
+          class: 'nomad-product__form',
+          novalidate: 'novalidate',
+          data-type: 'add-to-cart-form'
+        %}
+          <input
+            type="hidden"
+            name="id"
+            value="{{ current_variant.id }}"
+            data-nomad-variant-id
+          >
+
+          {% if section.settings.show_quantity %}
+            <div class="nomad-product__quantity">
+              <label for="NomadQuantity-{{ section.id }}">{{ 'products.product.quantity.label' | t }}</label>
+              <input
+                id="NomadQuantity-{{ section.id }}"
+                class="nomad-product__quantity-input"
+                type="number"
+                name="quantity"
+                min="{{ current_variant.quantity_rule.min | default: 1 }}"
+                step="{{ current_variant.quantity_rule.increment | default: 1 }}"
+                value="{{ current_variant.quantity_rule.min | default: 1 }}"
+              >
+            </div>
+          {% endif %}
+
+          <div class="nomad-product__buttons product-form__buttons">
+            <button
+              type="submit"
+              name="add"
+              class="nomad-product__atc nomad-btn product-form__submit button button--full-width button--primary"
+              data-nomad-atc
+              {% unless current_variant.available %}disabled{% endunless %}
+            >
+              <span data-nomad-atc-label>
+                {% if current_variant.available %}
+                  {{ section.settings.add_to_cart_label }}
+                {% else %}
+                  {{ 'products.product.sold_out' | t }}
+                {% endif %}
+              </span>
+              {% render 'loading-spinner' %}
+            </button>
+            {% if section.settings.show_dynamic_checkout %}
+              {{ form | payment_button }}
+            {% endif %}
+          </div>
+        {% endform %}
+      </product-form>
+
+      {% if trust_note and trust_note.settings.text != blank %}
+        <p class="nomad-product__trust-note" {{ trust_note.shopify_attributes }}>
+          {{ trust_note.settings.text | escape }}
+        </p>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if accordion_blocks.size > 0 %}
+    <div class="nomad-section__inner">
+      <div class="nomad-card color-{{ section.settings.card_color_scheme }} nomad-product__overview">
+        <div class="nomad-product__accordion">
+          {% for block in accordion_blocks %}
+            <div {{ block.shopify_attributes }}>
+              {% render 'nomad-accordion',
+                heading: block.settings.heading,
+                content: block.settings.content,
+                open: block.settings.open
+              %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if section.settings.show_also_bought and also_bought_blocks.size > 0 %}
+    <div class="nomad-section__inner">
+      <div class="nomad-card color-{{ section.settings.card_color_scheme }} nomad-product__also-bought">
+        {% if section.settings.also_bought_heading != blank %}
+          <h2 class="nomad-product__also-bought-heading nomad-heading">
+            {{ section.settings.also_bought_heading | escape }}
+          </h2>
+        {% endif %}
+        <ul class="nomad-product__also-bought-list">
+          {% for block in also_bought_blocks %}
+            <li class="nomad-product__also-bought-item" {{ block.shopify_attributes }}>
+              {% if block.settings.link != blank %}
+                <a class="nomad-product__also-bought-link" href="{{ block.settings.link }}">
+              {% else %}
+                <div class="nomad-product__also-bought-link">
+              {% endif %}
+                <div class="nomad-product__also-bought-media nomad-media">
+                  {% if block.settings.image != blank %}
+                    {{
+                      block.settings.image
+                      | image_url: width: 480
+                      | image_tag: loading: 'lazy', widths: '160,240,320,480', sizes: '160px'
+                    }}
+                  {% else %}
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {% endif %}
+                </div>
+                {% if block.settings.title != blank %}
+                  <p class="nomad-product__also-bought-title">{{ block.settings.title | escape }}</p>
+                {% endif %}
+                {% if block.settings.meta != blank %}
+                  <p class="nomad-product__also-bought-meta">{{ block.settings.meta | escape }}</p>
+                {% endif %}
+                {% if block.settings.price_text != blank %}
+                  <p class="nomad-product__also-bought-price">{{ block.settings.price_text | escape }}</p>
+                {% endif %}
+              {% if block.settings.link != blank %}
+                </a>
+              {% else %}
+                </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Nomad product",
+  "tag": "section",
+  "class": "section-nomad-product",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "card_color_scheme",
+      "label": "Card color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_info",
+      "label": "Sticky product info on desktop",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "variant_style",
+      "label": "Variant style",
+      "options": [
+        { "value": "pills", "label": "Pills" },
+        { "value": "tiles", "label": "Tiles" }
+      ],
+      "default": "pills"
+    },
+    {
+      "type": "text",
+      "id": "variant_heading",
+      "label": "Variant tiles heading",
+      "default": "Choose your color"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_product_description",
+      "label": "Use product description",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "custom_description",
+      "label": "Custom description",
+      "default": "<p>Track what matters with Glocket. Built for everyday carry and clear status at a glance.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity",
+      "label": "Show quantity selector",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "Add to cart label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show Buy it now",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_also_bought",
+      "label": "Show also bought",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "also_bought_heading",
+      "label": "Also bought heading",
+      "default": "Others like you also bought"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "social_proof",
+      "name": "Social proof",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "rating_text",
+          "label": "Rating text",
+          "default": "4.7/5.0"
+        },
+        {
+          "type": "text",
+          "id": "reviews_text",
+          "label": "Reviews text",
+          "default": "128 reviews"
+        },
+        {
+          "type": "text",
+          "id": "customers_text",
+          "label": "Customers text",
+          "default": "Trusted by travelers"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "badge",
+      "name": "Badge",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Badge text",
+          "default": "Duties and taxes calculated at checkout"
+        }
+      ]
+    },
+    {
+      "type": "accordion_item",
+      "name": "Accordion row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Overview"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Compact tracker card for bags and everyday carry. Clear battery status. Easy to keep with you.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Open by default",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "also_bought",
+      "name": "Also bought item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Glocket sleeve"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Meta",
+          "default": "Accessory"
+        },
+        {
+          "type": "text",
+          "id": "price_text",
+          "label": "Price text",
+          "default": "$24"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "trust_note",
+      "name": "Trust note",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free shipping on orders over $50. 30-day returns."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nomad product",
+      "blocks": [
+        {
+          "type": "social_proof"
+        },
+        {
+          "type": "badge"
+        },
+        {
+          "type": "accordion_item"
+        },
+        {
+          "type": "trust_note"
+        },
+        {
+          "type": "also_bought"
+        },
+        {
+          "type": "also_bought",
+          "settings": {
+            "title": "Glocket cable kit",
+            "meta": "Bundle",
+            "price_text": "$18"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
