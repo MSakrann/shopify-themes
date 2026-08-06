@@ -297,17 +297,18 @@
   line-height: 1.2;
 }
 
-/* Accordion */
+/* Accordion — gap on block wrappers; each item is alone inside its wrapper,
+   so :last-child on .nomad-accordion__item would always match and kill spacing */
+.nomad-product__accordion-item:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
 .nomad-accordion__item {
-  margin: 0 0 0.75rem;
+  margin: 0;
   border: 1px solid rgba(var(--color-foreground), 0.2);
   border-radius: var(--nomad-radius);
   background: transparent;
   overflow: hidden;
-}
-
-.nomad-accordion__item:last-child {
-  margin-bottom: 0;
 }
 
 .nomad-accordion__trigger {

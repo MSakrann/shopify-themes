@@ -171,7 +171,7 @@
       <div class="nomad-card color-{{ section.settings.card_color_scheme }} nomad-product__overview">
         <div class="nomad-product__accordion">
           {% for block in accordion_blocks %}
-            <div {{ block.shopify_attributes }}>
+            <div class="nomad-product__accordion-item" {{ block.shopify_attributes }}>
               {% render 'nomad-accordion',
                 heading: block.settings.heading,
                 content: block.settings.content,
