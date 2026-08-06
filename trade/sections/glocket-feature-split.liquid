@@ -12,7 +12,7 @@
   class="glocket-section glocket-feature-split color-{{ section.settings.color_scheme }} gradient"
 >
   <div class="glocket-section__inner glocket-feature-split__grid{% if section.settings.media_position == 'right' %} glocket-feature-split__grid--media-right{% endif %}">
-    <div class="glocket-feature-split__media">
+    <div class="glocket-feature-split__media glocket-media-fit--{{ section.settings.image_fit }}">
       {% if section.settings.image != blank %}
         {{
           section.settings.image
@@ -77,6 +77,30 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "extend",
+          "label": "Extend (show full image)"
+        },
+        {
+          "value": "cover",
+          "label": "Cover (crop to fill)"
+        },
+        {
+          "value": "contain",
+          "label": "Contain (fit inside)"
+        },
+        {
+          "value": "fill",
+          "label": "Fill (stretch)"
+        }
+      ],
+      "default": "extend"
     },
     {
       "type": "text",

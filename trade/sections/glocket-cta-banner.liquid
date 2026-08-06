@@ -36,7 +36,7 @@
       </div>
 
       {% if section.settings.image != blank %}
-        <div class="glocket-cta-banner__media">
+        <div class="glocket-cta-banner__media glocket-media-fit--{{ section.settings.image_fit }}">
           {{
             section.settings.image
             | image_url: width: 1600
@@ -89,6 +89,30 @@
       "type": "image_picker",
       "id": "image",
       "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "options": [
+        {
+          "value": "extend",
+          "label": "Extend (show full image)"
+        },
+        {
+          "value": "cover",
+          "label": "Cover (crop to fill)"
+        },
+        {
+          "value": "contain",
+          "label": "Contain (fit inside)"
+        },
+        {
+          "value": "fill",
+          "label": "Fill (stretch)"
+        }
+      ],
+      "default": "extend"
     },
     {
       "type": "color_scheme",

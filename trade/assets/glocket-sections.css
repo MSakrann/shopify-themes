@@ -82,7 +82,7 @@
   min-width: 0;
   overflow: hidden;
   border-radius: var(--media-radius, 0);
-  background: rgba(var(--color-foreground), 0.04);
+  background: transparent;
 }
 
 .glocket-rich-media__image,
@@ -92,6 +92,62 @@
   height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
+}
+
+/* Image fit controls (cover / contain / fill / extend) */
+.glocket-media-fit--cover img,
+.glocket-media-fit--cover .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.glocket-media-fit--contain {
+  background: transparent;
+}
+
+.glocket-media-fit--contain img,
+.glocket-media-fit--contain .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+}
+
+.glocket-media-fit--fill img,
+.glocket-media-fit--fill .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: fill;
+}
+
+.glocket-media-fit--extend img,
+.glocket-media-fit--extend .placeholder-svg {
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+.glocket-process-steps__media.glocket-media-fit--cover img,
+.glocket-process-steps__media.glocket-media-fit--contain img,
+.glocket-process-steps__media.glocket-media-fit--fill img {
+  aspect-ratio: 4 / 3;
+}
+
+.glocket-cta-banner__media.glocket-media-fit--cover img,
+.glocket-cta-banner__media.glocket-media-fit--contain img,
+.glocket-cta-banner__media.glocket-media-fit--fill img {
+  aspect-ratio: auto;
+  min-height: 32rem;
+  height: 100%;
+}
+
+.glocket-cta-banner__media.glocket-media-fit--extend img {
+  min-height: 0;
+  height: auto;
 }
 
 .glocket-rich-media__video {
@@ -262,7 +318,7 @@
   min-width: 0;
   overflow: hidden;
   border-radius: var(--media-radius, 0);
-  background: rgba(var(--color-foreground), 0.04);
+  background: transparent;
 }
 
 .glocket-feature-split__image,
@@ -752,22 +808,121 @@
     border-left: 0;
   }
 
+  /* Mobile: center rich text media content */
+  .glocket-rich-media__content {
+    max-width: none;
+    text-align: center;
+  }
+
+  .glocket-rich-media__content .glocket-btn {
+    width: auto;
+    margin-inline: auto;
+  }
+
+  /* Mobile: center benefits cards */
+  .glocket-benefits-grid__card {
+    text-align: center;
+  }
+
+  .glocket-benefits-grid__icon {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  /* Mobile: center stats proof */
+  .glocket-stats-proof__lead,
+  .glocket-stats-proof__lead--without-media,
+  .glocket-stats-proof__stats,
+  .glocket-stats-proof__stat {
+    text-align: center;
+  }
+
+  .glocket-stats-proof__body,
+  .glocket-stats-proof__text {
+    max-width: none;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .glocket-stats-proof__content .glocket-btn {
+    width: auto;
+    margin-inline: auto;
+  }
+
+  /* Mobile: center feature split */
+  .glocket-feature-split__content {
+    max-width: none;
+    text-align: center;
+  }
+
+  .glocket-feature-split__content .glocket-btn {
+    width: auto;
+    margin-inline: auto;
+  }
+
+  /* Mobile: center process steps */
+  .glocket-process-steps__step {
+    text-align: center;
+  }
+
+  .glocket-process-steps__number {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  /* Mobile: icon row — hide scrollbar, peek next icon */
   .glocket-icon-row__inner {
     padding-right: 0;
+    overflow: hidden;
   }
 
   .glocket-icon-row__items {
     flex-wrap: nowrap;
     justify-content: flex-start;
+    gap: 1.6rem;
     overflow-x: auto;
-    padding-right: 1.5rem;
-    padding-bottom: 1rem;
+    overflow-y: hidden;
+    padding-right: 0;
+    padding-bottom: 0;
     scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .glocket-icon-row__items::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
   }
 
   .glocket-icon-row__item {
-    flex: 0 0 14rem;
+    flex: 0 0 calc((100% - 1.6rem) / 2.35);
+    max-width: none;
     scroll-snap-align: start;
+  }
+
+  /* Mobile: center comparison proof */
+  .glocket-comparison-proof__lead,
+  .glocket-comparison-proof__lead--without-media,
+  .glocket-comparison-proof__claims,
+  .glocket-comparison-proof__claim {
+    text-align: center;
+  }
+
+  .glocket-comparison-proof__body,
+  .glocket-comparison-proof__text {
+    max-width: none;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  /* Mobile: center reviews */
+  .glocket-reviews__card {
+    text-align: center;
+  }
+
+  .glocket-reviews__author {
+    justify-content: center;
   }
 
   .glocket-guarantee__card {

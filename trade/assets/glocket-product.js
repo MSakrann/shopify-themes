@@ -67,19 +67,28 @@
     });
   }
 
+  function stripHtml(value) {
+    return String(value || '')
+      .replace(/<[^>]*>/g, '')
+      .replace(/&nbsp;/g, ' ')
+      .trim();
+  }
+
   function formatMoney(cents, format) {
     var value = Number(cents);
     if (!Number.isFinite(value)) return '';
+
+    var cleanFormat = stripHtml(format) || '${{amount}}';
 
     if (
       typeof window !== 'undefined' &&
       window.Shopify &&
       typeof window.Shopify.formatMoney === 'function'
     ) {
-      return window.Shopify.formatMoney(value, format);
+      return stripHtml(window.Shopify.formatMoney(value, cleanFormat));
     }
 
-    var token = (format || '${{amount}}').match(/\{\{\s*(\w+)\s*\}\}/);
+    var token = cleanFormat.match(/\{\{\s*(\w+)\s*\}\}/);
     if (!token) return (value / 100).toFixed(2);
 
     var decimals = token[1].indexOf('no_decimals') === -1 ? 2 : 0;
@@ -97,7 +106,7 @@
 
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands);
     amount = parts.length > 1 ? parts[0] + decimal + parts[1] : parts[0];
-    return format.replace(token[0], amount);
+    return cleanFormat.replace(token[0], amount);
   }
 
   function syncVariant(event) {

@@ -20,26 +20,35 @@
   }
 }
 
-/* Gallery */
+/* Gallery — sits on section background (no white card) */
+.nomad-product__gallery {
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+}
+
 .nomad-gallery {
   display: grid;
   gap: 0.75rem;
+  background: transparent;
 }
 
 .nomad-gallery__stage {
   aspect-ratio: 1 / 1;
-  background: transparent;
+  background: transparent !important;
   overflow: hidden;
   border-radius: var(--nomad-radius);
 }
 
 .nomad-gallery__image,
-.nomad-gallery__placeholder {
+.nomad-gallery__placeholder,
+.nomad-gallery__placeholder.placeholder-svg {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  background: transparent;
+  background: transparent !important;
 }
 
 .nomad-gallery__thumbs {
@@ -75,7 +84,7 @@
   padding: 0;
   border: 2px solid transparent;
   border-radius: calc(var(--nomad-radius) * 0.35);
-  background: transparent;
+  background: transparent !important;
   cursor: pointer;
   overflow: hidden;
 }
@@ -89,7 +98,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  background: transparent;
+  background: transparent !important;
 }
 
 @media screen and (min-width: 750px) {
@@ -342,8 +351,7 @@
   }
 }
 
-/* Buy box cards */
-.nomad-product__gallery,
+/* Buy box cards (info / overview only — gallery is not a card) */
 .nomad-product__info,
 .nomad-product__overview,
 .nomad-product__also-bought {
@@ -542,11 +550,20 @@
 }
 
 @media screen and (max-width: 749px) {
-  .nomad-product__gallery,
+  /* Near full-bleed cards like Nomad mobile (~8px side inset) */
+  .nomad-product .nomad-section__inner {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
   .nomad-product__info,
   .nomad-product__overview,
   .nomad-product__also-bought {
-    padding: 1rem;
+    padding: 1.25rem 1rem;
+  }
+
+  .nomad-product__gallery {
+    padding: 0;
   }
 
   .nomad-product__info--sticky {

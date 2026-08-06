@@ -151,14 +151,20 @@
 
 .glocket-product__quantity-input {
   width: 8rem;
-  min-height: 4.4rem;
+  min-height: calc(4.5rem + var(--buttons-border-width, 1px) * 2);
   padding: 0.8rem;
-  border: 1px solid var(--glocket-border-selected);
-  border-radius: 0;
+  border: var(--buttons-border-width, 1px) solid rgba(var(--color-foreground), var(--buttons-border-opacity, 1));
+  border-radius: var(--buttons-radius, 0);
   background: transparent;
   color: inherit;
   font: inherit;
   text-align: center;
+  box-sizing: border-box;
+}
+
+.glocket-product__quantity-input:focus-visible {
+  outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
+  outline-offset: 0.3rem;
 }
 
 .glocket-product__price {
@@ -189,6 +195,28 @@
   font-weight: 700;
 }
 
+/* Force dynamic checkout / Buy it now to use the section color scheme */
+.glocket-product .shopify-payment-button__button {
+  font-family: inherit;
+  min-height: 5.4rem;
+}
+
+.glocket-product .shopify-payment-button__button--unbranded,
+.glocket-product .shopify-payment-button__button--unbranded:hover:not([disabled]),
+.glocket-product .shopify-payment-button__button--branded,
+.glocket-product .shopify-payment-button__button--branded:hover:not([disabled]),
+.glocket-product .shopify-payment-button__button [role='button'],
+.glocket-product .shopify-payment-button__button [role='button']:hover:not([disabled]) {
+  background-color: rgba(var(--color-button), var(--alpha-button-background)) !important;
+  background: rgba(var(--color-button), var(--alpha-button-background)) !important;
+  color: rgb(var(--color-button-text)) !important;
+  border-color: rgba(var(--color-button), var(--alpha-button-border)) !important;
+}
+
+.glocket-product .shopify-payment-button__more-options {
+  color: rgb(var(--color-foreground));
+}
+
 .glocket-product__trust-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
@@ -209,11 +237,15 @@
 
 .glocket-accordion {
   margin-top: 1.5rem;
-  border-top: 1px solid var(--glocket-border);
+  border: 1px solid var(--glocket-border);
 }
 
 .glocket-accordion__item {
   border-bottom: 1px solid var(--glocket-border);
+}
+
+.glocket-accordion__item:last-child {
+  border-bottom: 0;
 }
 
 .glocket-accordion__trigger {
@@ -222,7 +254,7 @@
   justify-content: space-between;
   gap: 1rem;
   width: 100%;
-  padding: 1rem 0;
+  padding: 1rem 1.2rem;
   list-style: none;
   cursor: pointer;
   font-weight: 600;
@@ -239,6 +271,7 @@
   border-bottom: 2px solid currentColor;
   transform: rotate(45deg);
   transition: transform 0.2s ease;
+  flex-shrink: 0;
 }
 
 .glocket-accordion__item[open] .glocket-accordion__chevron {
@@ -246,7 +279,7 @@
 }
 
 .glocket-accordion__panel {
-  padding: 0 0 1rem;
+  padding: 0 1.2rem 1rem;
 }
 
 .glocket-gallery {
@@ -256,7 +289,7 @@
 
 .glocket-gallery__stage {
   aspect-ratio: 1 / 1;
-  background: rgba(var(--color-foreground), 0.04);
+  background: transparent;
   overflow: hidden;
 }
 
@@ -275,10 +308,19 @@
   padding: 0;
   list-style: none;
   overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.glocket-gallery__thumbs::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .glocket-gallery__thumb {
   display: block;
+  flex: 0 0 72px;
   width: 72px;
   height: 72px;
   padding: 0;
@@ -306,10 +348,19 @@
 
   .glocket-gallery__thumbs {
     flex-direction: column;
-    max-height: 520px;
+    /* Show ~4 full thumbs + tip of the next one; hide scrollbar */
+    max-height: calc((72px * 4) + (0.5rem * 3) + 28px);
     overflow-y: auto;
     overflow-x: hidden;
     order: -1;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .glocket-gallery__thumbs::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
   }
 }
 
@@ -372,7 +423,7 @@
 .glocket-variant-tiles__media {
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  background: rgba(var(--color-foreground), 0.04);
+  background: transparent;
 }
 
 .glocket-variant-tiles__media img {
