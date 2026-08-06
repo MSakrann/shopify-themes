@@ -5,6 +5,9 @@
 
 .nomad-product {
   --nomad-radius: 24px;
+  --nomad-page-inset: 1.25rem;
+  --nomad-card-pad-x: 1.5rem;
+  --nomad-card-pad-y: 1.5rem;
 }
 
 .nomad-product__layout {
@@ -355,7 +358,8 @@
 .nomad-product__info,
 .nomad-product__overview,
 .nomad-product__also-bought {
-  padding: 1.25rem;
+  padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
+  box-sizing: border-box;
 }
 
 .nomad-product__info {
@@ -460,11 +464,28 @@
   width: 100%;
   min-height: 48px;
   font-weight: 700;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Kill Trade button border ring (::after box-shadow) */
+.nomad-product__atc:after,
+.nomad-product .product-form__submit:after,
+.nomad-product .button:after,
+.nomad-product .shopify-payment-button__button:after,
+.nomad-product .shopify-payment-button__button--unbranded:after {
+  content: none !important;
+  display: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .nomad-product .shopify-payment-button__button {
   font-family: inherit;
   min-height: 48px;
+  border: none !important;
+  border-width: 0 !important;
+  box-shadow: none !important;
   border-radius: 999px !important;
 }
 
@@ -477,7 +498,10 @@
   background-color: rgba(var(--color-button), var(--alpha-button-background)) !important;
   background: rgba(var(--color-button), var(--alpha-button-background)) !important;
   color: rgb(var(--color-button-text)) !important;
-  border-color: rgba(var(--color-button), var(--alpha-button-border)) !important;
+  border: none !important;
+  border-width: 0 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
   border-radius: 999px !important;
 }
 
@@ -550,16 +574,22 @@
 }
 
 @media screen and (max-width: 749px) {
-  /* Near full-bleed cards like Nomad mobile (~8px side inset) */
+  .nomad-product {
+    --nomad-page-inset: 1rem;
+    --nomad-card-pad-x: 1.35rem;
+    --nomad-card-pad-y: 1.35rem;
+  }
+
+  /* Match Nomad: cards inset from page edges */
   .nomad-product .nomad-section__inner {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-left: var(--nomad-page-inset);
+    padding-right: var(--nomad-page-inset);
   }
 
   .nomad-product__info,
   .nomad-product__overview,
   .nomad-product__also-bought {
-    padding: 1.25rem 1rem;
+    padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
   }
 
   .nomad-product__gallery {

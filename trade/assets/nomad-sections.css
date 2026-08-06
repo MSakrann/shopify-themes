@@ -28,6 +28,11 @@
 .nomad-section {
   --nomad-radius: 24px;
   --nomad-gap: 1rem;
+  /* Side inset around cards (page background shows through) */
+  --nomad-page-inset: 1.25rem;
+  /* Inner padding inside white cards */
+  --nomad-card-pad-x: 1.5rem;
+  --nomad-card-pad-y: 1.5rem;
   padding-top: var(--nomad-pad-top, 16px);
   padding-bottom: var(--nomad-pad-bottom, 16px);
 }
@@ -35,8 +40,8 @@
 .nomad-section__inner {
   max-width: var(--page-width, 1200px);
   margin: 0 auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: var(--nomad-page-inset);
+  padding-right: var(--nomad-page-inset);
 }
 
 .nomad-card {
@@ -44,6 +49,7 @@
   overflow: hidden;
   background: rgb(var(--color-background));
   color: rgb(var(--color-foreground));
+  box-sizing: border-box;
 }
 
 .nomad-heading {
@@ -65,10 +71,16 @@
   padding: 0.9rem 1.5rem;
   border-radius: 999px;
   border: none;
+  box-shadow: none;
   text-decoration: none;
   cursor: pointer;
   background: rgb(var(--color-button));
   color: rgb(var(--color-button-text));
+}
+
+.nomad-btn:after {
+  content: none !important;
+  display: none !important;
 }
 
 .nomad-media {
@@ -138,7 +150,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(1.5rem, 4vw, 3rem);
+  padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
   min-width: 0;
 }
 
@@ -193,9 +205,15 @@
 }
 
 @media screen and (max-width: 749px) {
+  .nomad-section {
+    --nomad-page-inset: 1rem;
+    --nomad-card-pad-x: 1.35rem;
+    --nomad-card-pad-y: 1.35rem;
+  }
+
   .nomad-section__inner {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
+    padding-left: var(--nomad-page-inset);
+    padding-right: var(--nomad-page-inset);
   }
 
   .nomad-btn {
@@ -204,7 +222,7 @@
 
   .nomad-feature-split__content {
     text-align: center;
-    padding: 1.25rem 1rem 1.5rem;
+    padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
   }
 
   .nomad-feature-split__content .nomad-btn {
@@ -226,7 +244,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(1.5rem, 4vw, 3rem);
+  padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
   min-width: 0;
 }
 
@@ -301,7 +319,7 @@
   .nomad-story-banner__content {
     order: 2;
     text-align: center;
-    padding: 1.25rem 1rem 1.5rem;
+    padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
     align-items: center;
   }
 
@@ -337,7 +355,7 @@
 .nomad-cross-sell__link {
   display: block;
   height: 100%;
-  padding: 1rem;
+  padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
   color: inherit;
   text-decoration: none;
 }
@@ -412,14 +430,14 @@
   }
 
   .nomad-cross-sell__link {
-    padding: 0.85rem;
+    padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
   }
 }
 
 /* Specs + FAQ cards */
 .nomad-specs__card,
 .nomad-faq__card {
-  padding: 1.25rem 1.25rem 1.35rem;
+  padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
 }
 
 .nomad-specs__heading,
@@ -516,7 +534,7 @@
 @media screen and (max-width: 749px) {
   .nomad-specs__card,
   .nomad-faq__card {
-    padding: 1rem 1rem 1.15rem;
+    padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
   }
 
   .nomad-specs .nomad-accordion__trigger,
@@ -565,7 +583,7 @@
   display: flex;
   min-width: 0;
   flex-direction: column;
-  padding: 1.25rem 1.25rem 1.35rem;
+  padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
 }
 
 .nomad-reviews__media {
@@ -625,6 +643,6 @@
   }
 
   .nomad-reviews__card {
-    padding: 1rem 1rem 1.15rem;
+    padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
   }
 }
