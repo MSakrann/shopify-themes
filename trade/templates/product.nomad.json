@@ -1,0 +1,303 @@
+{
+  "sections": {
+    "main": {
+      "type": "nomad-product",
+      "blocks": {
+        "social": {
+          "type": "social_proof",
+          "settings": {
+            "rating_text": "4.7/5.0",
+            "reviews_text": "128 reviews",
+            "customers_text": "Trusted by travelers"
+          }
+        },
+        "badge": {
+          "type": "badge",
+          "settings": {
+            "text": "Duties and taxes calculated at checkout"
+          }
+        },
+        "acc_1": {
+          "type": "accordion_item",
+          "settings": {
+            "heading": "Overview",
+            "content": "<p>Compact tracker card for bags and everyday carry. Clear battery status. Easy to keep with you.</p>",
+            "open": true
+          }
+        },
+        "trust": {
+          "type": "trust_note",
+          "settings": {
+            "text": "Free shipping on orders over $50. 30-day returns."
+          }
+        },
+        "also_1": {
+          "type": "also_bought",
+          "settings": {
+            "title": "Glocket sleeve",
+            "meta": "Accessory",
+            "price_text": "$24"
+          }
+        },
+        "also_2": {
+          "type": "also_bought",
+          "settings": {
+            "title": "Glocket cable kit",
+            "meta": "Bundle",
+            "price_text": "$18"
+          }
+        }
+      },
+      "block_order": [
+        "social",
+        "badge",
+        "acc_1",
+        "trust",
+        "also_1",
+        "also_2"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-1",
+        "enable_sticky_info": true,
+        "variant_style": "pills",
+        "variant_heading": "Choose your color",
+        "use_product_description": true,
+        "show_quantity": true,
+        "add_to_cart_label": "Add to cart",
+        "show_dynamic_checkout": true,
+        "show_also_bought": true,
+        "also_bought_heading": "Others like you also bought",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "feature_1": {
+      "type": "nomad-feature-split",
+      "settings": {
+        "heading": "A feature worth a closer look",
+        "body": "<p>Pair a focused product detail with a clear explanation of how it improves the everyday experience.</p>",
+        "image_fit": "cover",
+        "media_position": "left",
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-1",
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "feature_2": {
+      "type": "nomad-feature-split",
+      "settings": {
+        "heading": "Built for everyday desks",
+        "body": "<p>Keep cables visible, ready, and out of the way so charging stays simple at home and at work.</p>",
+        "image_fit": "cover",
+        "media_position": "right",
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-1",
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "feature_3": {
+      "type": "nomad-feature-split",
+      "settings": {
+        "heading": "Ready wherever you charge",
+        "body": "<p>A compact shape that packs easily for bags and short trips without adding clutter.</p>",
+        "image_fit": "cover",
+        "media_position": "left",
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-1",
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "story": {
+      "type": "nomad-story-banner",
+      "settings": {
+        "eyebrow": "Limited edition",
+        "heading": "Built for the way you actually charge",
+        "body": "<p>Glocket keeps cables tidy and ready so everyday charging feels simpler at home, at work, and on the go.</p>",
+        "link_label": "Shop the collection",
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-1",
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "cross_sell": {
+      "type": "nomad-cross-sell",
+      "blocks": {
+        "card_1": {
+          "type": "product_card",
+          "settings": {
+            "title": "Glocket desk dock",
+            "subtitle": "Everyday kit",
+            "price_text": "$49"
+          }
+        },
+        "card_2": {
+          "type": "product_card",
+          "settings": {
+            "title": "Glocket travel pouch",
+            "subtitle": "On the go",
+            "price_text": "$29"
+          }
+        },
+        "card_3": {
+          "type": "product_card",
+          "settings": {
+            "title": "Glocket cable kit",
+            "subtitle": "Bundle",
+            "price_text": "$18"
+          }
+        },
+        "card_4": {
+          "type": "product_card",
+          "settings": {
+            "title": "Glocket wall mount",
+            "subtitle": "Home setup",
+            "price_text": "$36"
+          }
+        }
+      },
+      "block_order": ["card_1", "card_2", "card_3", "card_4"],
+      "settings": {
+        "heading": "Keep Exploring",
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-1",
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "specs": {
+      "type": "nomad-specs",
+      "blocks": {
+        "group_1": {
+          "type": "group",
+          "settings": {
+            "heading": "Design",
+            "content": "<ul><li>Compact silicone body that grips desks and nightstands</li><li>Open channel keeps cables visible and ready to grab</li><li>Soft edges and a low profile that stays out of the way</li></ul>",
+            "open": true
+          }
+        },
+        "group_2": {
+          "type": "group",
+          "settings": {
+            "heading": "Technical",
+            "content": "<ul><li>Fits common USB-C, Lightning, and MagSafe cable tips</li><li>Non-slip base for wood, glass, and painted surfaces</li><li>Easy to wipe clean; indoor use only</li></ul>",
+            "open": false
+          }
+        }
+      },
+      "block_order": ["group_1", "group_2"],
+      "settings": {
+        "heading": "More info",
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-1",
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "faq": {
+      "type": "nomad-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "question",
+          "settings": {
+            "question": "What cables does Glocket work with?",
+            "answer": "<p>Glocket is sized for everyday USB-C, Lightning, and MagSafe cable tips so you can park the ones you use most.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "question",
+          "settings": {
+            "question": "Will it slide on a smooth desk?",
+            "answer": "<p>The silicone base is designed to grip wood, glass, and painted surfaces under normal use. Keep the underside clean for the best hold.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "question",
+          "settings": {
+            "question": "How do I clean Glocket?",
+            "answer": "<p>Wipe with a soft damp cloth and mild soap if needed. Avoid harsh solvents and do not put Glocket in the dishwasher.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "question",
+          "settings": {
+            "question": "Is Glocket made for travel?",
+            "answer": "<p>Yes. The compact shape packs easily for work bags and short trips so your cables stay ready wherever you charge.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "question",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>If Glocket is not the right fit, contact support within the return window listed on your order confirmation for a simple exchange or refund.</p>"
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_5"],
+      "settings": {
+        "heading": "Frequently asked questions",
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-1",
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
+    "reviews": {
+      "type": "nomad-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "author": "Alex M.",
+            "rating_text": "5 / 5",
+            "title": "Clips cleanly to MagSafe",
+            "body": "<p>Glocket stays put on my MagSafe and keeps the cable tip ready when I sit down at my desk.</p>"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "author": "Jordan K.",
+            "rating_text": "5 / 5",
+            "title": "Finally organized cables",
+            "body": "<p>I keep USB-C and Lightning parked in one place. Desk clutter dropped overnight.</p>"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "author": "Sam R.",
+            "rating_text": "4 / 5",
+            "title": "Solid everyday carry",
+            "body": "<p>Small enough for a bag, strong enough that the cable tip does not wander when I travel.</p>"
+          }
+        }
+      },
+      "block_order": ["review_1", "review_2", "review_3"],
+      "settings": {
+        "heading": "What customers are saying",
+        "rating_text": "4.9 / 5",
+        "reviews_count_text": "Based on customer reviews",
+        "color_scheme": "scheme-1",
+        "card_color_scheme": "scheme-1",
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    }
+  },
+  "order": [
+    "main",
+    "feature_1",
+    "feature_2",
+    "feature_3",
+    "story",
+    "cross_sell",
+    "specs",
+    "faq",
+    "reviews"
+  ]
+}
