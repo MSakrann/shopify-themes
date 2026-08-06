@@ -1,0 +1,55 @@
+{% doc %}
+  Nomad product gallery with main media and thumbnails.
+  @param {object} product - Product object
+  @param {object} section - Section object
+  @example
+  {% render 'nomad-gallery', product: product, section: section %}
+{% enddoc %}
+
+{% assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media %}
+{% assign gallery_image_id = 'NomadGalleryImage-' | append: section.id %}
+
+<div
+  id="NomadGallery-{{ section.id }}"
+  class="nomad-gallery"
+  data-gallery
+>
+  <div class="nomad-gallery__stage">
+    {% if featured_media %}
+      {{
+        featured_media
+        | image_url: width: 1500
+        | image_tag:
+          class: 'nomad-gallery__image',
+          id: gallery_image_id,
+          widths: '400, 600, 800, 1000, 1200, 1500',
+          sizes: '(min-width: 990px) 45vw, 100vw',
+          loading: 'eager'
+      }}
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'nomad-gallery__placeholder' }}
+    {% endif %}
+  </div>
+
+  {% if product.media.size > 1 %}
+    <ul class="nomad-gallery__thumbs" role="list">
+      {% for media in product.media %}
+        <li class="nomad-gallery__thumb-item">
+          <button
+            type="button"
+            class="nomad-gallery__thumb{% if media.id == featured_media.id %} is-active{% endif %}"
+            data-media-id="{{ media.id }}"
+            data-media-src="{{ media | image_url: width: 1500 }}"
+            aria-label="View image {{ forloop.index }}"
+          >
+            {{
+              media
+              | image_url: width: 200
+              | image_tag: loading: 'lazy', widths: '100,150,200', sizes: '72px'
+            }}
+          </button>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>

@@ -1,0 +1,40 @@
+{% doc %}
+  Nomad-style option pills and color swatches.
+  @param {object} product
+  @param {string} product_form_id
+{% enddoc %}
+<div class="nomad-variant-pills" data-nomad-variant-pills>
+  {% for option in product.options_with_values %}
+    {% assign option_downcase = option.name | downcase %}
+    {% assign is_color = false %}
+    {% if option_downcase contains 'color' or option_downcase contains 'colour' %}
+      {% assign is_color = true %}
+    {% endif %}
+    <fieldset class="nomad-variant-pills__group">
+      <legend class="nomad-variant-pills__legend">{{ option.name | escape }}</legend>
+      <div class="nomad-variant-pills__options{% if is_color %} nomad-variant-pills__options--swatches{% endif %}">
+        {% for value in option.values %}
+          {% assign input_id = product_form_id | append: '-opt-' | append: option.position | append: '-' | append: forloop.index %}
+          <label class="nomad-variant-pills__label{% if is_color %} nomad-variant-pills__label--swatch{% endif %}{% if value.selected %} is-selected{% endif %}">
+            <input
+              form="{{ product_form_id }}"
+              type="radio"
+              name="options[{{ option.name | escape }}]"
+              value="{{ value | escape }}"
+              id="{{ input_id }}"
+              {% if value.selected %}checked{% endif %}
+              data-option-position="{{ option.position }}"
+              data-option-value="{{ value | escape }}"
+            >
+            {% if is_color %}
+              <span class="nomad-variant-pills__swatch" title="{{ value | escape }}"></span>
+              <span class="visually-hidden">{{ value | escape }}</span>
+            {% else %}
+              <span class="nomad-variant-pills__text">{{ value | escape }}</span>
+            {% endif %}
+          </label>
+        {% endfor %}
+      </div>
+    </fieldset>
+  {% endfor %}
+</div>

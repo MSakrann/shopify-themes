@@ -1,0 +1,11 @@
+{% doc %}
+  @param {string} heading
+  @param {string} content - HTML richtext
+  @param {boolean} [open]
+{% enddoc %}
+<details class="nomad-accordion__item"{% if open %} open{% endif %}>
+  <summary class="nomad-accordion__trigger">
+    <span>{{ heading | escape }}</span>
+  </summary>
+  <div class="nomad-accordion__panel rte">{{ content }}</div>
+</details>
