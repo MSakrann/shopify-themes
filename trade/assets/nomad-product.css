@@ -596,6 +596,7 @@
   .nomad-product__overview,
   .nomad-product__also-bought {
     padding: var(--nomad-card-pad-y) var(--nomad-card-pad-x);
+    padding-top: 36px;
   }
 
   .nomad-product__gallery {
