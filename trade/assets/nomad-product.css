@@ -305,8 +305,13 @@
 }
 
 .nomad-variant-tiles__label {
-  font-size: 1.3rem;
-  line-height: 1.2;
+  display: block;
+  padding: 0 0.35rem 0.15rem;
+  font-size: 1.1rem;
+  line-height: 1.25;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 /* Accordion — gap on block wrappers; each item is alone inside its wrapper,
