@@ -6,9 +6,22 @@
         "social": {
           "type": "social_proof",
           "settings": {
+            "show_stars": true,
             "rating_text": "4.7/5.0",
             "reviews_text": "128 reviews",
             "customers_text": "Trusted by travelers"
+          }
+        },
+        "bullet_1": {
+          "type": "bullet",
+          "settings": {
+            "text": "Benefit point one"
+          }
+        },
+        "bullet_2": {
+          "type": "bullet",
+          "settings": {
+            "text": "Benefit point two"
           }
         },
         "badge": {
@@ -50,6 +63,8 @@
       },
       "block_order": [
         "social",
+        "bullet_1",
+        "bullet_2",
         "badge",
         "acc_1",
         "trust",

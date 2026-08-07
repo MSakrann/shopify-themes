@@ -47,6 +47,9 @@
         {% else %}
           <div class="nomad-product__social-proof" {{ social_proof.shopify_attributes }}>
         {% endif %}
+          {% if social_proof.settings.show_stars %}
+            <span class="nomad-product__stars" aria-hidden="true">★★★★★</span>
+          {% endif %}
           {% if social_proof.settings.rating_text != blank %}
             <span class="nomad-product__social-proof-rating">{{ social_proof.settings.rating_text | escape }}</span>
           {% endif %}
@@ -83,6 +86,27 @@
       {% elsif section.settings.custom_description != blank %}
         <div class="nomad-product__description nomad-body rte">{{ section.settings.custom_description }}</div>
       {% endif %}
+
+      <div class="nomad-product__bullets">
+        {% for block in section.blocks %}
+          {% if block.type == 'bullet' %}
+            <div class="nomad-product__bullet" {{ block.shopify_attributes }}>
+              {% if block.settings.icon != blank %}
+                {{
+                  block.settings.icon
+                  | image_url: width: 64
+                  | image_tag: class: 'nomad-product__bullet-icon', loading: 'lazy', widths: '32,48,64'
+                }}
+              {% else %}
+                <span class="nomad-product__bullet-check" aria-hidden="true">✓</span>
+              {% endif %}
+              {% if block.settings.text != blank %}
+                <span class="nomad-product__bullet-text">{{ block.settings.text | escape }}</span>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
 
       {% if section.settings.variant_style == 'tiles' %}
         {% render 'nomad-variant-tiles',
@@ -345,6 +369,13 @@
       "limit": 1,
       "settings": [
         {
+          "type": "checkbox",
+          "id": "show_stars",
+          "label": "Show star rating (Glocket style)",
+          "default": true,
+          "info": "Turn off to keep text-only social proof"
+        },
+        {
           "type": "text",
           "id": "rating_text",
           "label": "Rating text",
@@ -366,6 +397,23 @@
           "type": "url",
           "id": "link",
           "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "bullet",
+      "name": "Benefit bullet",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Benefit point"
         }
       ]
     },

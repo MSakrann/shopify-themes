@@ -395,6 +395,51 @@
   text-underline-offset: 0.2rem;
 }
 
+.nomad-product__stars {
+  color: rgb(var(--color-button));
+  letter-spacing: 0.08em;
+}
+
+.nomad-product__bullets {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+}
+
+.nomad-product__bullets:empty {
+  display: none;
+  margin: 0;
+}
+
+.nomad-product__bullet {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nomad-product__bullet-icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+.nomad-product__bullet-check {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+  font-size: 1.3rem;
+}
+
+.nomad-product__bullet-text {
+  line-height: 1.35;
+}
+
 .nomad-product__title {
   margin: 0 0 0.75rem;
   font-size: clamp(2.4rem, 3.5vw, 3.6rem);
