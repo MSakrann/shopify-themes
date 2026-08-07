@@ -215,52 +215,53 @@
           {{ section.settings.also_bought_heading | escape }}
         </h2>
       {% endif %}
-      <div class="nomad-card color-{{ section.settings.card_color_scheme }} nomad-product__also-bought">
-        <ul class="nomad-product__also-bought-list" role="list">
-          {% for block in also_bought_blocks %}
-            {% assign also_product = block.settings.product %}
-            <li class="nomad-product__also-bought-item" {{ block.shopify_attributes }}>
-              {% if also_product != blank %}
-                <a class="nomad-product__also-bought-link" href="{{ also_product.url }}">
-                  <div class="nomad-product__also-bought-media nomad-media">
-                    {% if also_product.featured_media %}
-                      {{
-                        also_product.featured_media
-                        | image_url: width: 240
-                        | image_tag: loading: 'lazy', widths: '120,160,240', sizes: '72px'
-                      }}
-                    {% else %}
-                      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                    {% endif %}
-                  </div>
-                  <div class="nomad-product__also-bought-copy">
-                    <p class="nomad-product__also-bought-title">{{ also_product.title | escape }}</p>
-                    {% if block.settings.meta != blank %}
-                      <p class="nomad-product__also-bought-meta">{{ block.settings.meta | escape }}</p>
-                    {% elsif also_product.type != blank %}
-                      <p class="nomad-product__also-bought-meta">{{ also_product.type | escape }}</p>
-                    {% endif %}
-                    <p class="nomad-product__also-bought-price">
-                      {{ also_product.price | money }}
-                    </p>
-                  </div>
-                  <span class="nomad-product__also-bought-action" aria-hidden="true">+</span>
-                </a>
-              {% else %}
-                <div class="nomad-product__also-bought-link nomad-product__also-bought-link--empty">
-                  <div class="nomad-product__also-bought-media nomad-media">
+      <ul class="nomad-product__also-bought-list" role="list">
+        {% for block in also_bought_blocks %}
+          {% assign also_product = block.settings.product %}
+          <li
+            class="nomad-product__also-bought-item nomad-card color-{{ section.settings.card_color_scheme }} nomad-product__also-bought"
+            {{ block.shopify_attributes }}
+          >
+            {% if also_product != blank %}
+              <a class="nomad-product__also-bought-link" href="{{ also_product.url }}">
+                <div class="nomad-product__also-bought-media nomad-media">
+                  {% if also_product.featured_media %}
+                    {{
+                      also_product.featured_media
+                      | image_url: width: 240
+                      | image_tag: loading: 'lazy', widths: '120,160,240', sizes: '72px'
+                    }}
+                  {% else %}
                     {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                  </div>
-                  <div class="nomad-product__also-bought-copy">
-                    <p class="nomad-product__also-bought-title">Select a product</p>
-                    <p class="nomad-product__also-bought-meta">Also bought item</p>
-                  </div>
+                  {% endif %}
                 </div>
-              {% endif %}
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
+                <div class="nomad-product__also-bought-copy">
+                  <p class="nomad-product__also-bought-title">{{ also_product.title | escape }}</p>
+                  {% if block.settings.meta != blank %}
+                    <p class="nomad-product__also-bought-meta">{{ block.settings.meta | escape }}</p>
+                  {% elsif also_product.type != blank %}
+                    <p class="nomad-product__also-bought-meta">{{ also_product.type | escape }}</p>
+                  {% endif %}
+                  <p class="nomad-product__also-bought-price">
+                    {{ also_product.price | money }}
+                  </p>
+                </div>
+                <span class="nomad-product__also-bought-action" aria-hidden="true">+</span>
+              </a>
+            {% else %}
+              <div class="nomad-product__also-bought-link nomad-product__also-bought-link--empty">
+                <div class="nomad-product__also-bought-media nomad-media">
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+                <div class="nomad-product__also-bought-copy">
+                  <p class="nomad-product__also-bought-title">Select a product</p>
+                  <p class="nomad-product__also-bought-meta">Also bought item</p>
+                </div>
+              </div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
     </div>
   {% endif %}
 </section>

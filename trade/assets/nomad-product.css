@@ -335,7 +335,7 @@
   gap: 0.85rem;
   width: 100%;
   min-height: 48px;
-  padding: 1rem 1.2rem;
+  padding: 1rem 1.2rem 1rem calc(1.2rem + 10px);
   list-style: none;
   cursor: pointer;
   font-weight: 600;
@@ -369,7 +369,7 @@
 
 @media screen and (max-width: 749px) {
   .nomad-accordion__trigger {
-    padding: 1.1rem 1rem;
+    padding: 1.1rem 1rem 1.1rem calc(1rem + 10px);
   }
 
   .nomad-accordion__panel {
@@ -616,9 +616,11 @@
 }
 
 .nomad-product__also-bought-heading {
-  margin: 0 0 0.85rem;
+  margin: 15px 0 0.85rem;
   padding: 0 0.15rem;
-  font-size: clamp(1.6rem, 2.5vw, 2rem);
+  color: #000;
+  font-size: 20px;
+  line-height: 1.3;
   text-align: center;
 }
 
@@ -628,6 +630,13 @@
   gap: 0.75rem;
   margin: 0;
   padding: 0;
+  list-style: none;
+}
+
+.nomad-product__also-bought {
+  margin-top: 0;
+  padding: 0.75rem;
+  box-sizing: border-box;
   list-style: none;
 }
 
