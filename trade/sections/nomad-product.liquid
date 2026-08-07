@@ -209,44 +209,52 @@
   {% endif %}
 
   {% if section.settings.show_also_bought and also_bought_blocks.size > 0 %}
-    <div class="nomad-section__inner">
+    <div class="nomad-section__inner nomad-product__also-bought-wrap">
+      {% if section.settings.also_bought_heading != blank %}
+        <h2 class="nomad-product__also-bought-heading nomad-heading">
+          {{ section.settings.also_bought_heading | escape }}
+        </h2>
+      {% endif %}
       <div class="nomad-card color-{{ section.settings.card_color_scheme }} nomad-product__also-bought">
-        {% if section.settings.also_bought_heading != blank %}
-          <h2 class="nomad-product__also-bought-heading nomad-heading">
-            {{ section.settings.also_bought_heading | escape }}
-          </h2>
-        {% endif %}
-        <ul class="nomad-product__also-bought-list">
+        <ul class="nomad-product__also-bought-list" role="list">
           {% for block in also_bought_blocks %}
+            {% assign also_product = block.settings.product %}
             <li class="nomad-product__also-bought-item" {{ block.shopify_attributes }}>
-              {% if block.settings.link != blank %}
-                <a class="nomad-product__also-bought-link" href="{{ block.settings.link }}">
-              {% else %}
-                <div class="nomad-product__also-bought-link">
-              {% endif %}
-                <div class="nomad-product__also-bought-media nomad-media">
-                  {% if block.settings.image != blank %}
-                    {{
-                      block.settings.image
-                      | image_url: width: 480
-                      | image_tag: loading: 'lazy', widths: '160,240,320,480', sizes: '160px'
-                    }}
-                  {% else %}
-                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                  {% endif %}
-                </div>
-                {% if block.settings.title != blank %}
-                  <p class="nomad-product__also-bought-title">{{ block.settings.title | escape }}</p>
-                {% endif %}
-                {% if block.settings.meta != blank %}
-                  <p class="nomad-product__also-bought-meta">{{ block.settings.meta | escape }}</p>
-                {% endif %}
-                {% if block.settings.price_text != blank %}
-                  <p class="nomad-product__also-bought-price">{{ block.settings.price_text | escape }}</p>
-                {% endif %}
-              {% if block.settings.link != blank %}
+              {% if also_product != blank %}
+                <a class="nomad-product__also-bought-link" href="{{ also_product.url }}">
+                  <div class="nomad-product__also-bought-media nomad-media">
+                    {% if also_product.featured_media %}
+                      {{
+                        also_product.featured_media
+                        | image_url: width: 240
+                        | image_tag: loading: 'lazy', widths: '120,160,240', sizes: '72px'
+                      }}
+                    {% else %}
+                      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {% endif %}
+                  </div>
+                  <div class="nomad-product__also-bought-copy">
+                    <p class="nomad-product__also-bought-title">{{ also_product.title | escape }}</p>
+                    {% if block.settings.meta != blank %}
+                      <p class="nomad-product__also-bought-meta">{{ block.settings.meta | escape }}</p>
+                    {% elsif also_product.type != blank %}
+                      <p class="nomad-product__also-bought-meta">{{ also_product.type | escape }}</p>
+                    {% endif %}
+                    <p class="nomad-product__also-bought-price">
+                      {{ also_product.price | money }}
+                    </p>
+                  </div>
+                  <span class="nomad-product__also-bought-action" aria-hidden="true">+</span>
                 </a>
               {% else %}
+                <div class="nomad-product__also-bought-link nomad-product__also-bought-link--empty">
+                  <div class="nomad-product__also-bought-media nomad-media">
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                  <div class="nomad-product__also-bought-copy">
+                    <p class="nomad-product__also-bought-title">Select a product</p>
+                    <p class="nomad-product__also-bought-meta">Also bought item</p>
+                  </div>
                 </div>
               {% endif %}
             </li>
@@ -459,32 +467,15 @@
       "name": "Also bought item",
       "settings": [
         {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Glocket sleeve"
+          "type": "product",
+          "id": "product",
+          "label": "Product"
         },
         {
           "type": "text",
           "id": "meta",
-          "label": "Meta",
-          "default": "Accessory"
-        },
-        {
-          "type": "text",
-          "id": "price_text",
-          "label": "Price text",
-          "default": "$24"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link"
+          "label": "Subtitle override",
+          "info": "Optional. Defaults to the product type."
         }
       ]
     },
@@ -522,12 +513,7 @@
           "type": "also_bought"
         },
         {
-          "type": "also_bought",
-          "settings": {
-            "title": "Glocket cable kit",
-            "meta": "Bundle",
-            "price_text": "$18"
-          }
+          "type": "also_bought"
         }
       ]
     }

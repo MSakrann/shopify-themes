@@ -46,19 +46,11 @@
         },
         "also_1": {
           "type": "also_bought",
-          "settings": {
-            "title": "Glocket sleeve",
-            "meta": "Accessory",
-            "price_text": "$24"
-          }
+          "settings": {}
         },
         "also_2": {
           "type": "also_bought",
-          "settings": {
-            "title": "Glocket cable kit",
-            "meta": "Bundle",
-            "price_text": "$18"
-          }
+          "settings": {}
         }
       },
       "block_order": [
